@@ -1,4 +1,4 @@
-import CityCard from '../../components/CItyCard/CityCard';
+import CityCard from '../city-card/city-card';
 
 type ObjectProps = {
   id: number;

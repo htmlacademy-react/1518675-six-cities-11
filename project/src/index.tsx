@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/App/App';
+import App from './components/app/app';
 
 const mockPrices = [
   { id: 1, price: 100 },
