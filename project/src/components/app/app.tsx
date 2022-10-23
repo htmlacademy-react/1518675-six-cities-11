@@ -1,12 +1,12 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import Main from '../main/main';
-// import Favorites from '../favorites/favorites';
+import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
-import FavoritesEmpty from '../favorites-empty/favorites-empty';
-import NoPage from '../no-page/no-page';
+// import FavoritesEmpty from '../favorites-empty/favorites-empty';
+import NotFoundPage from '../not-found-page/not-found-page';
 import Layout from '../layout/layout';
 import Login from '../login/login';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, Url} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 
 const mockPrices = [
@@ -29,29 +29,25 @@ function App () {
             element={<Main prices={mockPrices}/>}
           />
           <Route
-            path='/favorites'
+            path={Url.Favorites}
             element={
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.NoAuth}
               >
-                <Login/>
+                <Favorites/>
               </PrivateRoute>
             }
           />
           <Route
-            path='/offer/:id'
+            path={Url.Offer}
             element={<Offer/>}
-          />
-          <Route
-            path='/favorites-empty'
-            element={<FavoritesEmpty/>}
           />
         </Route>
         <Route
-          path='/login'
+          path={Url.Login}
           element={<Login/>}
         />
-        <Route path='*' element={<NoPage/>} />
+        <Route path='*' element={<NotFoundPage/>} />
 
       </Routes>
     </BrowserRouter>

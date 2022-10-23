@@ -1,6 +1,14 @@
 const enum AuthorizationStatus {
   Auth = 'Auth',
-  NoAuth = 'NoAuth'
+  NoAuth = 'NoAuth',
+  Unknown = 'Unknown'
 }
 
-export {AuthorizationStatus};
+const enum Url {
+  Main = '/',
+  Favorites = '/favorites',
+  Login = '/login',
+  Offer = '/offer/:id'
+}
+
+export {AuthorizationStatus, Url};

@@ -72,9 +72,9 @@ function Main({prices}: MainProps): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                {
-                  prices.map((item: ObjectProps) => <CityCard price={item.price} key={item.id}/>)
-                }
+                {prices.map((item: ObjectProps) => (
+                  <CityCard price={item.price} key={item.id}/>
+                ))}
 
               </div>
             </section>
