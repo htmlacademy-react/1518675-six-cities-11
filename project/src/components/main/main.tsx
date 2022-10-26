@@ -1,15 +1,18 @@
-import CityCard from '../city-card/city-card';
+import CityList from '../city-list/city-list';
 
 type ObjectProps = {
   id: number;
   price: number;
+  type: string;
+  title: string;
+  img: string;
 };
 
 type MainProps = {
-  prices: ObjectProps[];
+  offers: ObjectProps[];
 };
 
-function Main({prices}: MainProps): JSX.Element {
+function Main({offers}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <main className="page__main page__main--index">
@@ -70,13 +73,9 @@ function Main({prices}: MainProps): JSX.Element {
                   <li className="places__option">Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
 
-                {prices.map((item: ObjectProps) => (
-                  <CityCard price={item.price} key={item.id}/>
-                ))}
+              <CityList offers={offers} />
 
-              </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

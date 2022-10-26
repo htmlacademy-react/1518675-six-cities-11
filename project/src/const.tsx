@@ -11,4 +11,9 @@ const enum Url {
   Offer = '/offer/:id'
 }
 
-export {AuthorizationStatus, Url};
+const enum OfferKind {
+  PrivateRoom = 'Private Room',
+  Apartment = 'Apartment'
+}
+
+export {AuthorizationStatus, Url, OfferKind};
