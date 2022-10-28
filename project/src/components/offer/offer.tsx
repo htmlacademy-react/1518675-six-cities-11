@@ -1,6 +1,11 @@
 import ReviewForm from '../review-form/review-form';
+import {useParams} from 'react-router-dom';
+import {offers} from '../../mocks/data';
 
 function Offer() {
+
+  const offerId = Number(useParams().id);
+  const {price, rating} = offers[offerId - 1];
 
   return (
     <div className="page">
@@ -49,7 +54,7 @@ function Offer() {
                   <span style={{width: '80%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
@@ -63,7 +68,7 @@ function Offer() {
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">

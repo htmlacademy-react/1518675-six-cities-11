@@ -1,19 +1,16 @@
-import FavoritesItem from '../favorites-item/favorites-item';
-
-type OfferType = {
-  id: number;
-  price: number;
-  type: string;
-  title: string;
-  img: string;
-}
-
+// import FavoritesItem from '../favorites-item/favorites-item';
+import {OfferType} from '../../types/offer-type';
+import CityCard from '../city-card/city-card';
+import {CardType} from '../../const';
+import {useState} from 'react';
 
 type FavoritesTypes = {
   offers: OfferType[];
 }
 
 function Favorites ({offers}: FavoritesTypes) {
+
+  const [activeCardMouseHandler, setActiveCardMouseHandler] = useState(false);
 
   return (
     <div className="page">
@@ -33,7 +30,13 @@ function Favorites ({offers}: FavoritesTypes) {
                 <div className="favorites__places">
                   {
                     offers.map((item: OfferType) => (
-                      <FavoritesItem {...item} key={item.id} />
+                      <CityCard
+                        offer={item}
+                        key={item.id}
+                        cardType={CardType.Favorites}
+                        activeCardMouseHandler={activeCardMouseHandler}
+                        setActiveCardMouseHandler={setActiveCardMouseHandler}
+                      />
                     ))
                   }
                 </div>

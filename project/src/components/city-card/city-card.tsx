@@ -1,29 +1,60 @@
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {generatePath, Link} from 'react-router-dom';
+import {OfferType} from '../../types/offer-type';
+import {Url} from '../../const';
+import {capitalizeFirstLetter} from '../../utils';
 
-type CityCardProps = {
-  id: number;
-  price: number;
-  type: string;
-  title: string;
-  img: string;
+type CityCardType = {
+  offer: OfferType;
+  cardType: string;
+  activeCardMouseHandler: boolean;
+  setActiveCardMouseHandler: (activeCard: boolean) => void | undefined;
 }
 
-function CityCard({id, title, type, img, price}: CityCardProps): JSX.Element {
+const classesForCards = {
+  main: {
+    article: 'cities__card place-card',
+    imageWrapper: 'cities__image-wrapper place-card__image-wrapper',
+    info: 'place-card__info'
+  },
+  favorites: {
+    article: 'favorites__card place-card',
+    imageWrapper: 'favorites__image-wrapper place-card__image-wrapper',
+    info: 'favorites__image-wrapper place-card__image-wrapper'
+  }
+};
 
-  const [activeCard, setActiveCard] = useState(false);
+type objectCardType = {
+  article: string;
+  imageWrapper: string;
+  info: string;
+}
+
+type objectCardTypeWrapper = {
+  main: objectCardType;
+  favorites: objectCardType;
+}
+
+function CityCard({offer, activeCardMouseHandler, setActiveCardMouseHandler, cardType}: CityCardType): JSX.Element {
+
+  const {article, imageWrapper, info} = classesForCards[cardType as keyof objectCardTypeWrapper];
+  const {img, price, id, title, type} = offer;
+  const generatedUrl = generatePath(Url.Offer, {id: `${id}`});
 
   return (
-    <article className="cities__card place-card" onMouseOver={() => setActiveCard(!activeCard)} >
+    <article
+      className={article}
+      onMouseOver={() => setActiveCardMouseHandler(!activeCardMouseHandler)}
+      onMouseLeave={() => setActiveCardMouseHandler(!activeCardMouseHandler)}
+    >
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={imageWrapper}>
         <a href="#">
-          <img className="place-card__image" src={img} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={img} width="260" height="200" alt={title} />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={info}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -44,10 +75,12 @@ function CityCard({id, title, type, img, price}: CityCardProps): JSX.Element {
         </div>
         <h2 className="place-card__name">
 
-          <Link to={`/offer/${id}`} title={`/offer/${id}`}>{title}</Link>
+          <Link to={generatedUrl} title={generatedUrl} >
+            {title}
+          </Link>
 
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>
     </article>
   );

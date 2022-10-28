@@ -7,14 +7,7 @@ import Layout from '../layout/layout';
 import Login from '../login/login';
 import {AuthorizationStatus, Url} from '../../const';
 import PrivateRoute from '../private-route/private-route';
-
-type OfferType = {
-  id: number;
-  price: number;
-  type: string;
-  title: string;
-  img: string;
-}
+import {OfferType} from '../../types/offer-type';
 
 type AppTypes = {
   offers: OfferType[];

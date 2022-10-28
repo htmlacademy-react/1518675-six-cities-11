@@ -1,15 +1,9 @@
 import CityList from '../city-list/city-list';
+import {OfferType} from '../../types/offer-type';
 
-type ObjectProps = {
-  id: number;
-  price: number;
-  type: string;
-  title: string;
-  img: string;
-};
 
 type MainProps = {
-  offers: ObjectProps[];
+  offers: OfferType[];
 };
 
 function Main({offers}: MainProps): JSX.Element {
