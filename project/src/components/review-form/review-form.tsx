@@ -12,11 +12,12 @@ const typesRating = {
 function ReviewForm () {
   const [text, setText] = useState('');
 
-  // const [currentRating, setCurrentRating] = useState(0);
+  const [, setCurrentRating] = useState(0);
 
   const handleRatingChange = (ratingNumber: number) => {
-    console.log(ratingNumber);
+    setCurrentRating(ratingNumber);
   };
+
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>

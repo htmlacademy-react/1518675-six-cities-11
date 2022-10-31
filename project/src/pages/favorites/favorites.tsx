@@ -1,6 +1,5 @@
 import {OfferType} from '../../types/offer-type';
 import CityCard from '../../components/city-card/city-card';
-import {CardType} from '../../const';
 import FavoritesCitySection from '../../components/favorites-city-section/favorites-city-section';
 
 type FavoritesType = {
@@ -8,30 +7,33 @@ type FavoritesType = {
 }
 
 type filteredOffersType = {
-  [key: string]: object[];
+  [key: string]: OfferType[];
 }
 
 function Favorites({offers}: FavoritesType) {
 
   const filteredOffersByCities: filteredOffersType = {};
 
+  // const newFilteredOffers = offers.reduce((result: filteredOffersType, current, index) => {
+  //
+  //   if (!Object.hasOwn(result, current.city.name)) {
+  //     return {
+  //       ...result, [current.city.name]: [current]
+  //     }
+  //   }
+  //
+  //   return {
+  //     ...result, [current.city.name]: [current]
+  //   };
+  // });
+
   offers.forEach((offer) => {
-
-    if (filteredOffersByCities[offer.city.name]) {
-      filteredOffersByCities[offer.city.name].push(offer);
-    } else {
+    if (!filteredOffersByCities[offer.city.name]) {
       filteredOffersByCities[offer.city.name] = [];
-      filteredOffersByCities[offer.city.name].push(offer);
     }
-  });
 
-  Object.keys(filteredOffersByCities).map((value) => {
-    filteredOffersByCities[value].forEach((offer) => {
-      // console.log(offer);
-    });
+    filteredOffersByCities[offer.city.name].push(offer);
   });
-
-  console.log(filteredOffersByCities['Amsterdam']);
 
   return (
     <div className="page">
@@ -51,12 +53,11 @@ function Favorites({offers}: FavoritesType) {
                         filteredOffersByCities[value].map((item: OfferType) => (
                           <CityCard
                             offer={item}
-                            cardType="main"
+                            cardType="favorites"
                             key={item.id}
                           />
                         ))
                       }
-
                     </>
 
                   </FavoritesCitySection>
