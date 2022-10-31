@@ -1,7 +1,7 @@
+import {useState} from 'react';
+
 import CityCard from '../city-card/city-card';
 import {OfferType} from '../../types/offer-type';
-import {useState} from 'react';
-import {CardType} from '../../const';
 
 type CityListTypes = {
   offers: OfferType[];
@@ -9,7 +9,11 @@ type CityListTypes = {
 
 function CityList({offers}: CityListTypes): JSX.Element {
 
-  const [activeCardMouseHandler, setActiveCardMouseHandler] = useState(false);
+  const [, setActiveId] = useState<number | null>(null);
+
+  const handleMouseAction = (activeId: number | null) => {
+    setActiveId(activeId);
+  };
 
   return (
     <div className="cities__places-list places__list">
@@ -17,10 +21,9 @@ function CityList({offers}: CityListTypes): JSX.Element {
         offers.map((item: OfferType) => (
           <CityCard
             offer={item}
-            cardType={CardType.Main}
+            cardType="main"
             key={item.id}
-            activeCardMouseHandler={activeCardMouseHandler}
-            setActiveCardMouseHandler={setActiveCardMouseHandler}
+            onMouseAction={handleMouseAction}
           />
         ))
       }

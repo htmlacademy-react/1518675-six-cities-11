@@ -1,29 +1,34 @@
 import {useState} from 'react';
-import ReviewFormOneStar from '../review-form-one-star/review-form-one-star';
+import RatingItem from '../rating-item/rating-item';
 
-const typesRating = [
-  { label: 'perfect', count: 5 },
-  { label: 'good', count: 4 },
-  { label: 'not bad', count: 3 },
-  { label: 'badly', count: 2 },
-  { label: 'terribly', count: 1 }
-];
-
-type ReviewFormOneStarType = {
-  label: string;
-  count: number;
-}
+const typesRating = {
+  5: 'perfect',
+  4: 'good',
+  3: 'not bad',
+  2: 'badly',
+  1: 'terribly'
+};
 
 function ReviewForm () {
   const [text, setText] = useState('');
 
+  // const [currentRating, setCurrentRating] = useState(0);
+
+  const handleRatingChange = (ratingNumber: number) => {
+    console.log(ratingNumber);
+  };
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          typesRating.map((item: ReviewFormOneStarType) => (
-            <ReviewFormOneStar label={item.label} count={item.count} key={item.count} />
+          Object.entries(typesRating).map(([key, value]) => (
+            <RatingItem
+              label={value}
+              count={key}
+              key={key}
+              onRatingChange={handleRatingChange}
+            />
           ))
         }
       </div>

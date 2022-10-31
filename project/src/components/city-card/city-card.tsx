@@ -1,13 +1,12 @@
 import {generatePath, Link} from 'react-router-dom';
 import {OfferType} from '../../types/offer-type';
 import {Url} from '../../const';
-import {capitalizeFirstLetter} from '../../utils';
+import {capitalizeFirstLetter, calculateWidthRating} from '../../utils';
 
 type CityCardType = {
   offer: OfferType;
-  cardType: string;
-  activeCardMouseHandler: boolean;
-  setActiveCardMouseHandler: (activeCard: boolean) => void | undefined;
+  cardType: 'main' | 'favorites';
+  onMouseAction?: (activeCard: number | null) => void;
 }
 
 const classesForCards = {
@@ -19,32 +18,26 @@ const classesForCards = {
   favorites: {
     article: 'favorites__card place-card',
     imageWrapper: 'favorites__image-wrapper place-card__image-wrapper',
-    info: 'favorites__image-wrapper place-card__image-wrapper'
+    info: 'favorites__card-info place-card__info'
   }
 };
 
-type objectCardType = {
-  article: string;
-  imageWrapper: string;
-  info: string;
-}
+/*--- У блока инфо неверный класс ---*/
 
-type objectCardTypeWrapper = {
-  main: objectCardType;
-  favorites: objectCardType;
-}
+function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
 
-function CityCard({offer, activeCardMouseHandler, setActiveCardMouseHandler, cardType}: CityCardType): JSX.Element {
+  const {article, imageWrapper, info} = classesForCards[cardType];
+  const {img, price, id, title, type, rating} = offer;
 
-  const {article, imageWrapper, info} = classesForCards[cardType as keyof objectCardTypeWrapper];
-  const {img, price, id, title, type} = offer;
+  const ratingWidth = calculateWidthRating(rating);
+
   const generatedUrl = generatePath(Url.Offer, {id: `${id}`});
 
   return (
     <article
       className={article}
-      onMouseOver={() => setActiveCardMouseHandler(!activeCardMouseHandler)}
-      onMouseLeave={() => setActiveCardMouseHandler(!activeCardMouseHandler)}
+      onMouseOver={() => onMouseAction ? onMouseAction(id) : null}
+      onMouseLeave={() => onMouseAction ? onMouseAction(null) : null}
     >
       <div className="place-card__mark">
         <span>Premium</span>
@@ -69,7 +62,7 @@ function CityCard({offer, activeCardMouseHandler, setActiveCardMouseHandler, car
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${ratingWidth}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

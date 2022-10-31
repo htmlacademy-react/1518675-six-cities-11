@@ -1,11 +1,15 @@
 import ReviewForm from '../review-form/review-form';
 import {useParams} from 'react-router-dom';
 import {offers} from '../../mocks/data';
+import {calculateWidthRating} from '../../utils';
+import Map from '../map/map';
 
 function Offer() {
 
   const offerId = Number(useParams().id);
   const {price, rating} = offers[offerId - 1];
+
+  const ratingWidth = calculateWidthRating(rating);
 
   return (
     <div className="page">
@@ -51,7 +55,7 @@ function Offer() {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: `${ratingWidth}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -163,7 +167,7 @@ function Offer() {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map className="property__map" />
         </section>
         <div className="container">
           <section className="near-places places">

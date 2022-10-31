@@ -1,7 +1,7 @@
 type OfferType = {
   bedrooms?: number;
-  city?: {
-    location: {
+  city: {
+    location?: {
       latitude: number;
       longitude: number;
       zoom: number;

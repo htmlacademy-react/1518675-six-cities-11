@@ -10,7 +10,10 @@ const offers: OfferType[] = [
     img: 'img/apartment-01.jpg',
     rating: 4.6,
     isFavorite: true,
-    isPremium: false
+    isPremium: false,
+    city: {
+      name: 'Amsterdam'
+    }
   },
   {
     id: 2,
@@ -20,7 +23,10 @@ const offers: OfferType[] = [
     img: 'img/apartment-02.jpg',
     rating: 2.2,
     isFavorite: true,
-    isPremium: true
+    isPremium: true,
+    city: {
+      name: 'Cologne'
+    }
   },
   {
     id: 3,
@@ -30,7 +36,10 @@ const offers: OfferType[] = [
     img: 'img/apartment-03.jpg',
     rating: 4.9,
     isFavorite: false,
-    isPremium: false
+    isPremium: false,
+    city: {
+      name: 'Cologne'
+    }
   },{
     id: 4,
     price: 380,
@@ -39,7 +48,10 @@ const offers: OfferType[] = [
     img: 'img/apartment-03.jpg',
     rating: 3.0,
     isFavorite: true,
-    isPremium: false
+    isPremium: false,
+    city: {
+      name: 'Amsterdam'
+    }
   }
 ];
 
