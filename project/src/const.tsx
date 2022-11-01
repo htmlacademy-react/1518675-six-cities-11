@@ -11,4 +11,14 @@ const enum Url {
   Offer = '/offer/:id'
 }
 
-export {AuthorizationStatus, Url};
+const enum OfferKind {
+  PrivateRoom = 'private room',
+  Apartment = 'apartment'
+}
+
+const enum CardType {
+  Main = 'main',
+  Favorites = 'favorites'
+}
+
+export {AuthorizationStatus, Url, OfferKind, CardType};

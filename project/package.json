@@ -24,6 +24,9 @@
     "plugins": [
       "@typescript-eslint"
     ],
+    "rules": {
+      "no-console": "off"
+    },
     "extends": [
       "react-app",
       "react-app/jest",

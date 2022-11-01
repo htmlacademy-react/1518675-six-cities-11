@@ -1,24 +1,19 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import Main from '../main/main';
-import Favorites from '../favorites/favorites';
+import Main from '../../pages/main/main';
+import Favorites from '../../pages/favorites/favorites';
 import Offer from '../offer/offer';
-// import FavoritesEmpty from '../favorites-empty/favorites-empty';
-import NotFoundPage from '../not-found-page/not-found-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Layout from '../layout/layout';
-import Login from '../login/login';
+import Login from '../../pages/login/login';
 import {AuthorizationStatus, Url} from '../../const';
 import PrivateRoute from '../private-route/private-route';
+import {OfferType} from '../../types/offer-type';
 
-const mockPrices = [
-  { id: 1, price: 100 },
-  { id: 2, price: 789 },
-  { id: 3, price: 122 },
-  { id: 4, price: 32 },
-  { id: 5, price: 666 },
-  { id: 6, price: 69 }
-];
+type AppTypes = {
+  offers: OfferType[];
+}
 
-function App () {
+function App ({offers}: AppTypes) {
 
   return (
     <BrowserRouter>
@@ -26,15 +21,17 @@ function App () {
         <Route path='/' element={<Layout/>}>
           <Route
             index
-            element={<Main prices={mockPrices}/>}
+            element={<Main offers={offers}/>}
           />
           <Route
             path={Url.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <Favorites/>
+                <Favorites
+                  offers={offers}
+                />
               </PrivateRoute>
             }
           />
