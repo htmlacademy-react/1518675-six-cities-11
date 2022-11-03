@@ -6,34 +6,21 @@ type FavoritesType = {
   offers: OfferType[];
 }
 
-type filteredOffersType = {
+type FilteredOffersType = {
   [key: string]: OfferType[];
 }
 
 function Favorites({offers}: FavoritesType) {
 
-  const filteredOffersByCities: filteredOffersType = {};
+  const filteredOffersByCities = offers.reduce<FilteredOffersType>((acc, current) => {
 
-  // const newFilteredOffers = offers.reduce((result: filteredOffersType, current, index) => {
-  //
-  //   if (!Object.hasOwn(result, current.city.name)) {
-  //     return {
-  //       ...result, [current.city.name]: [current]
-  //     }
-  //   }
-  //
-  //   return {
-  //     ...result, [current.city.name]: [current]
-  //   };
-  // });
-
-  offers.forEach((offer) => {
-    if (!filteredOffersByCities[offer.city.name]) {
-      filteredOffersByCities[offer.city.name] = [];
+    if (!acc[current.city.name]) {
+      acc[current.city.name] = [];
     }
 
-    filteredOffersByCities[offer.city.name].push(offer);
-  });
+    acc[current.city.name].push(current);
+    return acc;
+  }, {});
 
   return (
     <div className="page">
@@ -44,21 +31,19 @@ function Favorites({offers}: FavoritesType) {
             <ul className="favorites__list">
 
               {
-                Object.keys(filteredOffersByCities).map((value) => (
+                Object.entries(filteredOffersByCities).map(([city, cityOffers]) => (
 
-                  <FavoritesCitySection city={value} key={value}>
+                  <FavoritesCitySection city={city} key={city}>
 
-                    <>
-                      {
-                        filteredOffersByCities[value].map((item: OfferType) => (
-                          <CityCard
-                            offer={item}
-                            cardType="favorites"
-                            key={item.id}
-                          />
-                        ))
-                      }
-                    </>
+                    {
+                      cityOffers.map((item: OfferType) => (
+                        <CityCard
+                          offer={item}
+                          cardType="favorites"
+                          key={item.id}
+                        />
+                      ))
+                    }
 
                   </FavoritesCitySection>
                 ))

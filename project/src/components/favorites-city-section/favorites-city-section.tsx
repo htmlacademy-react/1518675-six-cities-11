@@ -1,8 +1,8 @@
-import {ReactElement} from 'react';
+import {ReactNode} from 'react';
 
 type FavoritesCitySectionProps = {
   city: string;
-  children: ReactElement;
+  children: ReactNode;
 }
 
 function FavoritesCitySection({children, city}: FavoritesCitySectionProps) {
