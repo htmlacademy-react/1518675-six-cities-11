@@ -22,6 +22,9 @@ function Favorites({offers}: FavoritesType) {
     return acc;
   }, {});
 
+  const pepegas = offers.reduce<FilteredOffersType>((acc, offer) => ({...acc, [offer.city.name]: acc[offer.city.name] ? acc[offer.city.name].concat(offer) : [offer]}), {});
+  console.log(pepegas);
+
   return (
     <div className="page">
       <main className="page__main page__main--favorites">
