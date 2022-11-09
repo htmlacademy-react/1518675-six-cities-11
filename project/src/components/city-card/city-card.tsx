@@ -2,6 +2,7 @@ import {generatePath, Link} from 'react-router-dom';
 import {OfferType} from '../../types/offer-type';
 import {Url} from '../../const';
 import {capitalizeFirstLetter, calculateWidthRating} from '../../utils';
+// import {MouseEvent} from 'react';
 
 type CityCardType = {
   offer: OfferType;
@@ -22,12 +23,15 @@ const classesForCards = {
   }
 };
 
-/*--- У блока инфо неверный класс ---*/
-
 function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
 
   const {article, imageWrapper, info} = classesForCards[cardType];
   const {img, price, id, title, type, rating} = offer;
+
+  // const listItemHoverHandler = (evt: MouseEvent<HTMLLIElement>) => {
+  //   console.log(evt);
+  //   onMouseAction(evt);
+  // };
 
   const ratingWidth = calculateWidthRating(rating);
 
