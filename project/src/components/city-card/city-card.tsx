@@ -22,12 +22,15 @@ const classesForCards = {
   }
 };
 
-/*--- У блока инфо неверный класс ---*/
-
 function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
 
   const {article, imageWrapper, info} = classesForCards[cardType];
-  const {img, price, id, title, type, rating} = offer;
+  const {previewImage, price, id, title, type, rating} = offer;
+
+  // const listItemHoverHandler = (evt: MouseEvent<HTMLLIElement>) => {
+  //   console.log(evt);
+  //   onMouseAction(evt);
+  // };
 
   const ratingWidth = calculateWidthRating(rating);
 
@@ -44,7 +47,7 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
       </div>
       <div className={imageWrapper}>
         <a href="#">
-          <img className="place-card__image" src={img} width="260" height="200" alt={title} />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title}/>
         </a>
       </div>
       <div className={info}>
@@ -68,7 +71,7 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
         </div>
         <h2 className="place-card__name">
 
-          <Link to={generatedUrl} title={generatedUrl} >
+          <Link to={generatedUrl} title={generatedUrl}>
             {title}
           </Link>
 

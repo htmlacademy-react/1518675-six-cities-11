@@ -2,7 +2,7 @@ import {Navigate} from 'react-router-dom';
 import {AuthorizationStatus, Url} from '../../const';
 
 type PrivateRouteProps = {
-  authorizationStatus: AuthorizationStatus;
+  authorizationStatus: 'Auth' | 'NoAuth' | 'Unknown';
   children: JSX.Element;
 };
 

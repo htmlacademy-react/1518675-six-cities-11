@@ -3,12 +3,28 @@ import {OfferType} from '../../types/offer-type';
 import CityTabs from '../../components/city-tabs/city-tabs';
 import Map from '../../components/map/map';
 import Sorting from '../../components/sorting/sorting';
+// import {useState} from 'react';
 
 type MainProps = {
   offers: OfferType[];
 };
 
 function Main({offers}: MainProps): JSX.Element {
+  // const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
+
+  // const onListItemHover = (listItemName) => {
+  //   const currentPoint = ((point) => {})
+  //
+  // };
+
+  const onListItemHover = (listItemName: string) => {
+    console.log(listItemName);
+    // const currentPoint = offers.find((point) =>
+    //   point.city.name === listItemName,
+    // );
+    // setSelectedPoint(currentPoint);
+  };
+
   return (
     <div className="page page--gray page--main">
       <main className="page__main page__main--index">
@@ -24,12 +40,19 @@ function Main({offers}: MainProps): JSX.Element {
 
               <Sorting/>
 
-              <CityList offers={offers} />
+              <CityList
+                onListItemHover={onListItemHover}
+                offers={offers}
+              />
 
             </section>
             <div className="cities__right-section">
 
-              <Map className="cities__map" />
+              <Map
+                className="cities__map"
+                offers={offers}
+                // selectedPoint={selectedPoint}
+              />
 
             </div>
           </div>

@@ -1,7 +1,7 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Favorites from '../../pages/favorites/favorites';
-import Offer from '../offer/offer';
+import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Layout from '../layout/layout';
 import Login from '../../pages/login/login';

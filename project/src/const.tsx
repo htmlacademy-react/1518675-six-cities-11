@@ -1,24 +1,24 @@
-const enum AuthorizationStatus {
-  Auth = 'Auth',
-  NoAuth = 'NoAuth',
-  Unknown = 'Unknown'
-}
+const AuthorizationStatus = {
+  Auth: 'Auth',
+  NoAuth: 'NoAuth',
+  Unknown: 'Unknown'
+} as const;
 
-const enum Url {
-  Main = '/',
-  Favorites = '/favorites',
-  Login = '/login',
-  Offer = '/offer/:id'
-}
+const Url = {
+  Main: '/',
+  Favorites: '/favorites',
+  Login: '/login',
+  Offer: '/offer/:id',
+} as const;
 
-const enum OfferKind {
-  PrivateRoom = 'private room',
-  Apartment = 'apartment'
-}
+const OfferKind = {
+  PrivateRoom:'private room',
+  Apartment: 'apartment'
+} as const;
 
-const enum CardType {
-  Main = 'main',
-  Favorites = 'favorites'
-}
+const CardType = {
+  Main: 'main',
+  Favorites: 'favorites'
+} as const;
 
 export {AuthorizationStatus, Url, OfferKind, CardType};
