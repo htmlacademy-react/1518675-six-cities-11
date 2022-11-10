@@ -5,7 +5,7 @@ import {capitalizeFirstLetter, calculateWidthRating} from '../../utils';
 
 type CityCardType = {
   offer: OfferType;
-  cardType: 'main' | 'favorites';
+  cardType: 'main' | 'favorites' | 'nearby';
   onMouseAction?: (activeCard: number | null) => void;
 }
 
@@ -19,6 +19,11 @@ const classesForCards = {
     article: 'favorites__card place-card',
     imageWrapper: 'favorites__image-wrapper place-card__image-wrapper',
     info: 'favorites__card-info place-card__info'
+  },
+  nearby: {
+    article: 'near-places__card place-card',
+    imageWrapper: 'near-places__image-wrapper place-card__image-wrapper',
+    info: 'place-card__info'
   }
 };
 
@@ -46,9 +51,11 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
         <span>Premium</span>
       </div>
       <div className={imageWrapper}>
-        <a href="#">
+
+        <Link to={generatedUrl} title={generatedUrl}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title}/>
-        </a>
+        </Link>
+
       </div>
       <div className={info}>
         <div className="place-card__price-wrapper">
