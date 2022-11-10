@@ -1,34 +1,24 @@
-const enum AuthorizationStatus {
-  Auth = 'Auth',
-  NoAuth = 'NoAuth',
-  Unknown = 'Unknown'
-}
+const AuthorizationStatus = {
+  Auth: 'Auth',
+  NoAuth: 'NoAuth',
+  Unknown: 'Unknown'
+} as const;
 
-const enum Url {
-  Main = '/',
-  Favorites = '/favorites',
-  Login = '/login',
-  Offer = '/offer/:id'
-}
+const Url = {
+  Main: '/',
+  Favorites: '/favorites',
+  Login: '/login',
+  Offer: '/offer/:id',
+} as const;
 
-const enum OfferKind {
-  PrivateRoom = 'private room',
-  Apartment = 'apartment'
-}
+const OfferKind = {
+  PrivateRoom:'private room',
+  Apartment: 'apartment'
+} as const;
 
-const enum CardType {
-  Main = 'main',
-  Favorites = 'favorites'
-}
+const CardType = {
+  Main: 'main',
+  Favorites: 'favorites'
+} as const;
 
-const enum MarkerIcon {
-  Default = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-  Current = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg'
-}
-
-const enum DefaultLocation {
-  Latitude = 52.3909553943508,
-  Longitude = 4.929309666406198
-}
-
-export {AuthorizationStatus, Url, OfferKind, CardType, MarkerIcon, DefaultLocation};
+export {AuthorizationStatus, Url, OfferKind, CardType};

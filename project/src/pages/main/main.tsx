@@ -4,11 +4,9 @@ import CityTabs from '../../components/city-tabs/city-tabs';
 import Map from '../../components/map/map';
 import Sorting from '../../components/sorting/sorting';
 // import {useState} from 'react';
-// import {Point} from './../../types/point-type';
 
 type MainProps = {
   offers: OfferType[];
-  // points: Points;
 };
 
 function Main({offers}: MainProps): JSX.Element {

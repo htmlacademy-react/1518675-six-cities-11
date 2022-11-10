@@ -3,33 +3,21 @@ import 'leaflet/dist/leaflet.css';
 import {OfferType} from '../../types/offer-type';
 import {useEffect, useRef} from 'react';
 import {useMap} from '../../hooks/use-map';
-import {MarkerIcon} from '../../const';
-// import {Point} from '../../types/point-type';
-
-// type DefaultLocationType = {
-//   latitude: string;
-//   longitude: string;
-// }
-// type UseMapProps = {
-//   mapRef: MutableRefObject<HTMLElement | null>;
-//   city: City;
-// }
 
 type MapProps = {
   className: string;
-  offers?: OfferType[];
-  // selectedPoint: Point | undefined;
+  offers: OfferType[];
 }
 
 function Map ({className, offers}: MapProps) {
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef);
+  const map = useMap(mapRef, offers[0].city);
 
   const defaultCustomIcon = leaflet.icon({
-    iconUrl: MarkerIcon.Default,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: 'img/pin.svg',
+    iconSize: [27, 39],
+    iconAnchor: [20, 39]
   });
 
   // const currentCustomIcon = leaflet.icon({
@@ -61,7 +49,6 @@ function Map ({className, offers}: MapProps) {
       ref={mapRef}
       id='map'
       className={`${className} map`}
-      style={{width: '400px'}}
     >
 
     </section>
