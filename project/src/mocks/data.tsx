@@ -1,4 +1,5 @@
 import {OfferType} from '../types/offer-type';
+import {CommentType} from '../types/comment-type';
 
 const offers: OfferType[] = [
   {
@@ -48,16 +49,16 @@ const offers: OfferType[] = [
       'Dishwasher'
     ],
     host: {
-      'id': 25,
-      'name': 'Angelina',
-      'isPro': true,
-      'avatarUrl': 'img/avatar-angelina.jpg'
+      id: 25,
+      name: 'Angelina',
+      isPro: true,
+      avatarUrl: 'img/avatar-angelina.jpg'
     },
     description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
     location: {
-      'latitude': 52.37854,
-      'longitude': 4.894976,
-      'zoom': 16
+      latitude: 52.37854,
+      longitude: 4.894976,
+      zoom: 16
     },
     id: 1
   },
@@ -107,10 +108,10 @@ const offers: OfferType[] = [
       'Coffee machine'
     ],
     host: {
-      'id': 25,
-      'name': 'Angelina',
-      'isPro': true,
-      'avatarUrl': 'img/avatar-angelina.jpg'
+      id: 25,
+      name: 'Angelina',
+      isPro: true,
+      avatarUrl: 'img/avatar-angelina.jpg'
     },
     description: 'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
     location: {
@@ -402,4 +403,43 @@ const offers: OfferType[] = [
   }
 ];
 
-export {offers};
+const comments: CommentType[] = [
+  {
+    id: 1,
+    user: {
+      id: 15,
+      isPro: false,
+      name: 'Kendall',
+      avatarUrl: 'https://11.react.pages.academy/static/avatar/6.jpg'
+    },
+    rating: 2,
+    comment: 'I stayed here for one night and it was an unpleasant experience.',
+    date: '2022-09-24T13:58:46.511Z'
+  },
+  {
+    id: 2,
+    user: {
+      id: 12,
+      isPro: true,
+      name: 'Isaac',
+      avatarUrl: 'https://11.react.pages.academy/static/avatar/3.jpg'
+    },
+    rating: 3,
+    comment: 'I stayed here for one night and it was an unpleasant experience.',
+    date: '2022-09-24T13:58:46.511Z'
+  },
+  {
+    id: 3,
+    user: {
+      id: 18,
+      isPro: true,
+      name: 'Sophie',
+      avatarUrl: 'https://11.react.pages.academy/static/avatar/9.jpg'
+    },
+    rating: 4,
+    comment: 'Home is amazing. It\'s like staying in a museum. The rooms, furnishings and artworks are incredible. The views of My Vesuvius',
+    date: '2022-09-24T13:58:46.511Z'
+  }
+];
+
+export {offers, comments};

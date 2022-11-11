@@ -9,7 +9,7 @@ type MapProps = {
   offers: OfferType[];
 }
 
-function Map ({className, offers}: MapProps) {
+function Map ({className, offers}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0].city);
