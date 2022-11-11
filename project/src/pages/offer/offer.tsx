@@ -1,48 +1,29 @@
 import ReviewForm from '../../components/review-form/review-form';
 import {useParams} from 'react-router-dom';
 import {offers} from '../../mocks/data';
-import {calculateWidthRating} from '../../utils';
+import {comments} from '../../mocks/data';
+import {calculateWidthRating, capitalizeFirstLetter} from '../../utils';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import CityCard from '../../components/city-card/city-card';
 import CityNearbyList from '../../components/city-nearby-list/city-nearby-list';
+import Gallery from '../../components/gallery/gallery';
+import {MAX_NEARBY_OBJECTS} from '../../const';
 
-const comments = ['comment1', 'comment2', 'comment3'];
-
-function Offer() {
+function Offer(): JSX.Element {
 
   const offerId = Number(useParams().id);
-  const {price, rating} = offers[offerId - 1];
+  const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description} = offers[offerId - 1];
 
   const ratingWidth = calculateWidthRating(rating);
-
 
   return (
     <div className="page">
       <main className="page__main page__main--property">
         <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
-            </div>
-          </div>
+
+          <Gallery images={images} />
+
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
@@ -50,7 +31,7 @@ function Offer() {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {capitalizeFirstLetter(title)}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -68,13 +49,13 @@ function Offer() {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {capitalizeFirstLetter(type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
@@ -84,46 +65,25 @@ function Offer() {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+
+                  {
+                    goods.map((item) => (
+                      <li className="property__inside-item" key={item}>
+                        {item}
+                      </li>
+                    ))
+                  }
+
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {host.name}
                   </span>
                   <span className="property__user-status">
                     Pro
@@ -131,19 +91,14 @@ function Offer() {
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                    building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where
-                    the bustle of the city comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
 
-                <ReviewList reviews={comments} />
+                <ReviewList comments={comments} />
 
                 <ReviewForm />
 
@@ -151,7 +106,7 @@ function Offer() {
             </div>
           </div>
 
-          <Map className="property__map" offers={offers.slice(0, 3)} />
+          <Map className="property__map" offers={offers.slice(0, MAX_NEARBY_OBJECTS)} />
 
         </section>
         <div className="container">
@@ -160,7 +115,7 @@ function Offer() {
             <CityNearbyList>
 
               {
-                offers.slice(0, 3).map((item) => (
+                offers.slice(0, MAX_NEARBY_OBJECTS).map((item) => (
                   <CityCard offer={item} cardType={'nearby'} key={item.id}/>
                 ))
               }

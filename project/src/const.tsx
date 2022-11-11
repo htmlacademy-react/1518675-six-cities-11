@@ -21,4 +21,8 @@ const CardType = {
   Favorites: 'favorites'
 } as const;
 
-export {AuthorizationStatus, Url, OfferKind, CardType};
+const MAX_NEARBY_OBJECTS = 3;
+
+const MAX_OFFER_IMAGES = 6;
+
+export {AuthorizationStatus, Url, OfferKind, CardType, MAX_NEARBY_OBJECTS, MAX_OFFER_IMAGES};
