@@ -8,9 +8,7 @@ type CityTabs = {
 };
 
 function CityTabs({initCity}: CityTabs) {
-
   const dispatch = useAppDispatch();
-
   return (
     <div className="tabs">
       <section className="locations container">
