@@ -11,10 +11,6 @@ function CityTabs({initCity}: CityTabs) {
 
   const dispatch = useAppDispatch();
 
-  // const tabCss = cn('locations__item-link tabs__item', {
-  //   'tabs__item--active': initCity
-  // });
-
   return (
     <div className="tabs">
       <section className="locations container">
