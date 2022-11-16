@@ -21,8 +21,10 @@ const CardType = {
   Favorites: 'favorites'
 } as const;
 
+const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
 const MAX_NEARBY_OBJECTS = 3;
 
 const MAX_OFFER_IMAGES = 6;
 
-export {AuthorizationStatus, Url, OfferKind, CardType, MAX_NEARBY_OBJECTS, MAX_OFFER_IMAGES};
+export {AuthorizationStatus, Url, OfferKind, CardType, MAX_NEARBY_OBJECTS, MAX_OFFER_IMAGES, CITIES};

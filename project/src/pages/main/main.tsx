@@ -4,6 +4,7 @@ import CityTabs from '../../components/city-tabs/city-tabs';
 import Map from '../../components/map/map';
 import Sorting from '../../components/sorting/sorting';
 import {useAppSelector} from '../../hooks';
+import {useState} from 'react';
 
 type MainProps = {
   offers: OfferType[];
@@ -11,16 +12,16 @@ type MainProps = {
 
 function Main({offers}: MainProps): JSX.Element {
 
-  const initCity = useAppSelector((state) => state.city);
-
+  const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
 
-  const filteredOffersByCity = allOffers.filter((item) => item.city.name === initCity);
+  const [, setActiveId] = useState<number | null>(null);
 
+  const filteredOffersByCity = allOffers.filter((item) => item.city.name === activeCity);
   const filteredOffersAmount = filteredOffersByCity.length;
 
-  const onListItemHover = (listItemName: string) => {
-    console.log(listItemName);
+  const handleMouseAction = (activeId: number | null) => {
+    setActiveId(activeId);
   };
 
   return (
@@ -28,18 +29,18 @@ function Main({offers}: MainProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <CityTabs initCity={initCity}/>
+        <CityTabs activeCity={activeCity}/>
 
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffersAmount} places to stay in Amsterdam</b>
+              <b className="places__found">{filteredOffersAmount} places to stay in {activeCity}</b>
 
               <Sorting/>
 
               <CityList
-                onListItemHover={onListItemHover}
+                onCardHover={handleMouseAction}
                 offers={filteredOffersByCity}
               />
 

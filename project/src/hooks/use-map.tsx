@@ -24,7 +24,7 @@ function useMap(
           lat: location.latitude,
           lng: location.longitude,
         },
-        zoom: 10,
+        zoom: location.zoom,
       });
 
       const layer = new TileLayer(Tile.Layer, { attribution: Tile.Attribution });

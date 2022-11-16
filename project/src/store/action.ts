@@ -6,4 +6,4 @@ import {createAction} from '@reduxjs/toolkit';
 //   }
 // });
 
-export const filterOffers = createAction<{city: string}>('offer/filter');
+export const changeCity = createAction<{city: string}>('offer/changeCity');
