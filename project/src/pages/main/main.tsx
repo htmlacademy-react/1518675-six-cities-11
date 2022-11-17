@@ -20,6 +20,9 @@ function Main({offers}: MainProps): JSX.Element {
   const filteredOffersByCity = allOffers.filter((item) => item.city.name === activeCity);
   const filteredOffersAmount = filteredOffersByCity.length;
 
+  const sortedOffersPriceToHigh = filteredOffersByCity.sort((a, b) => a.price - b.price);
+  console.log(sortedOffersPriceToHigh);
+
   const handleMouseAction = (activeId: number | null) => {
     setActiveId(activeId);
   };
