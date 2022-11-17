@@ -1,0 +1,72 @@
+.placesFound {
+  display: block;
+  margin-bottom: 22px;
+  padding-left: 2px;
+  font-size: 24px;
+  line-height: 1.167;
+  font-weight: 700;
+  font-style: oblique;
+}
+.placesSorting {
+  position: relative;
+  margin-bottom: 33px;
+  padding-left: 5px;
+}
+.placesSortingArrow {
+  position: absolute;
+  top: 55%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+  fill: #0d0d0d;
+}
+.placesOptions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #dfdfdf;
+  border-radius: 4px;
+}
+.placesOptionsCustom {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 52px;
+  z-index: 1;
+  display: none;
+}
+.placesOptionsOpened {
+  display: block;
+}
+.placesOption {
+  min-width: 170px;
+  padding: 14px 16px 10px;
+  font-size: 14px;
+  line-height: 1.2143;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+  outline: 0;
+  cursor: pointer;
+}
+.placesOptionActive,
+.placesOption:focus,
+.placesOption:hover {
+  background-color: #f2f2f2;
+}
+.placesOption:selected {
+  background-color: #f2f2f2;
+}
+.placesSortingCaption {
+  font-size: 12px;
+  line-height: 1.167;
+  font-weight: 700;
+  margin-right: 8px;
+}
+.placesSortingType {
+  position: relative;
+  display: inline-block;
+  padding-right: 12px;
+  font-size: 12px;
+  line-height: 1.167;
+  cursor: pointer;
+}

@@ -14,17 +14,27 @@ function Main({offers}: MainProps): JSX.Element {
 
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
+  const activeSorting = useAppSelector((state) => state.sorting);
 
-  const [, setActiveId] = useState<number | null>(null);
+  const [activeId, setActiveId] = useState<number | null>(null);
 
   const filteredOffersByCity = allOffers.filter((item) => item.city.name === activeCity);
   const filteredOffersAmount = filteredOffersByCity.length;
 
-  const sortedOffersPriceToHigh = filteredOffersByCity.sort((a, b) => a.price - b.price);
-  console.log(sortedOffersPriceToHigh);
+  let sortedOffers = [];
 
-  const handleMouseAction = (activeId: number | null) => {
-    setActiveId(activeId);
+  if (activeSorting === 'Price: low to high') {
+    sortedOffers = filteredOffersByCity.sort((a, b) => a.price - b.price);
+  } else if (activeSorting === 'Price: high to low') {
+    sortedOffers = filteredOffersByCity.sort((a, b) => b.price - a.price);
+  } else if (activeSorting === 'Top rated first') {
+    sortedOffers = filteredOffersByCity.sort((a, b) => b.rating - a.rating);
+  } else {
+    sortedOffers = filteredOffersByCity;
+  }
+
+  const handleMouseAction = (id: number | null) => {
+    setActiveId(id);
   };
 
   return (
@@ -40,11 +50,11 @@ function Main({offers}: MainProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffersAmount} places to stay in {activeCity}</b>
 
-              <Sorting/>
+              <Sorting activeSorting={activeSorting}/>
 
               <CityList
                 onCardHover={handleMouseAction}
-                offers={filteredOffersByCity}
+                offers={sortedOffers}
               />
 
             </section>
@@ -53,7 +63,7 @@ function Main({offers}: MainProps): JSX.Element {
               <Map
                 className="cities__map"
                 offers={offers}
-                // selectedPoint={selectedPoint}
+                selectedCard={activeId}
               />
 
             </div>

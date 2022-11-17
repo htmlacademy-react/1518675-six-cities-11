@@ -23,8 +23,10 @@ const CardType = {
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
+const SORTING = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
 const MAX_NEARBY_OBJECTS = 3;
 
 const MAX_OFFER_IMAGES = 6;
 
-export {AuthorizationStatus, Url, OfferKind, CardType, MAX_NEARBY_OBJECTS, MAX_OFFER_IMAGES, CITIES};
+export {AuthorizationStatus, Url, OfferKind, CardType, MAX_NEARBY_OBJECTS, MAX_OFFER_IMAGES, CITIES, SORTING};
