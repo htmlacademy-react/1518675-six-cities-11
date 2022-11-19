@@ -34,7 +34,7 @@ function ReviewForm () {
         }
       </div>
       <textarea
-        onChange={(evt) => setText(evt.target.value)}
+        onChange={(e) => setText(e.target.value)}
         value={text}
         className="reviews__textarea form__textarea"
         id="review"

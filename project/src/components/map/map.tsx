@@ -28,7 +28,7 @@ function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
   });
 
   useEffect(() => {
-    if (map && offers !== undefined) {
+    if (map && offers) {
       offers.forEach((point) => {
         leaflet
           .marker({
@@ -42,7 +42,7 @@ function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, selectedCard]);
 
   return (
     <section

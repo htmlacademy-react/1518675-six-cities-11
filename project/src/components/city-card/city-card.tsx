@@ -46,11 +46,9 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
         <span>Premium</span>
       </div>
       <div className={imageWrapper}>
-
         <Link to={generatedUrl} title={generatedUrl}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title}/>
         </Link>
-
       </div>
       <div className={info}>
         <div className="place-card__price-wrapper">
@@ -72,11 +70,9 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-
           <Link to={generatedUrl} title={generatedUrl}>
             {title}
           </Link>
-
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>

@@ -15,16 +15,16 @@ function CityTabs({activeCity}: CityTabsProps) {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-
           {
             CITIES.map((city) => {
+
               const tabClass = cn('locations__item-link tabs__item', {'tabs__item--active': activeCity === city});
 
               return (
                 <li className="locations__item" key={city}>
                   <a
-                    onClick={(evt) => {
-                      evt.preventDefault();
+                    onClick={(e) => {
+                      e.preventDefault();
                       dispatch(changeCity({city}));
                     }}
                     className={tabClass}
@@ -36,7 +36,6 @@ function CityTabs({activeCity}: CityTabsProps) {
               );
             })
           }
-
         </ul>
       </section>
     </div>
