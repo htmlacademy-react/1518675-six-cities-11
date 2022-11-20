@@ -1,9 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
 
-// export const filterOffers = createAction('offer/filter', (value) => {
-//   return {
-//     payload: value
-//   }
-// });
-
 export const changeCity = createAction<{city: string}>('offer/changeCity');
+
+export const changeSorting = createAction<{sorting: string}>('main/changeSorting');

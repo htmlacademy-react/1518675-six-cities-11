@@ -1,19 +1,65 @@
-function Sorting() {
+import {useRef, useState} from 'react';
+import cn from 'classnames';
+import s from './sorting.module.scss';
+import {SORTING_METHODS} from '../../const';
+import {changeSorting} from '../../store/action';
+import {useAppDispatch} from '../../hooks';
+import {useClickAway} from 'react-use';
+
+type SortingProps = {
+  activeSorting: string;
+}
+
+function Sorting({activeSorting}: SortingProps) {
+  const dispatch = useAppDispatch();
+
+  const [open, setOpen] = useState(false);
+
+  const optionContainerClass = cn(s.placesOptions, s.placesOptionsCustom, {
+    [s.placesOptionsOpened]: open
+  });
+
+  const ref = useRef(null);
+  useClickAway(ref, () => {
+    setOpen(false);
+  });
 
   return (
-    <form className="places__sorting" action="src/pages/main/main#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type">
+    <form className={s.placesSorting} action="src/pages/main/main#" method="get" ref={ref}>
+      <span className={s.placesSortingCaption}>Sort by</span>
+      <span
+        className={s.placesSortingType}
+        onClick={() => setOpen(!open)}
+      >
         Popular
-        <svg className="places__sorting-arrow" width="7" height="4">
+        <svg className={s.placesSortingArrow} width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom places__options--opened">
-        <li className="places__option places__option--active">Popular</li>
-        <li className="places__option">Price: low to high</li>
-        <li className="places__option">Price: high to low</li>
-        <li className="places__option">Top rated first</li>
+      <ul className={optionContainerClass}>
+        {
+          Object.entries(SORTING_METHODS).map(([key, value]) => {
+
+            const optionClass = cn(s.placesOption, {
+              [s.placesOptionActive]: key === activeSorting
+            });
+
+            const sorting = key;
+
+            return (
+              <li
+                className={optionClass}
+                onClick={() => {
+                  setOpen(!open);
+                  dispatch(changeSorting({sorting}));
+                }}
+                key={value.name}
+              >
+                {value.name}
+              </li>
+            );
+          })
+        }
       </ul>
     </form>
   );

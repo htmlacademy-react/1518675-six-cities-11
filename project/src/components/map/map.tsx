@@ -7,9 +7,10 @@ import {useMap} from '../../hooks/use-map';
 type MapProps = {
   className: string;
   offers: OfferType[];
+  selectedCard?: number | null;
 }
 
-function Map ({className, offers}: MapProps): JSX.Element {
+function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0].city);
@@ -20,29 +21,28 @@ function Map ({className, offers}: MapProps): JSX.Element {
     iconAnchor: [20, 39]
   });
 
-  // const currentCustomIcon = leaflet.icon({
-  //   iconUrl: MarkerIcon.Current,
-  //   iconSize: [40, 40],
-  //   iconAnchor: [20, 40],
-  // });
+  const currentCustomIcon = leaflet.icon({
+    iconUrl: 'img/pin-active.svg',
+    iconSize: [27, 39],
+    iconAnchor: [20, 39],
+  });
 
   useEffect(() => {
-    if (map && offers !== undefined) {
+    if (map && offers) {
       offers.forEach((point) => {
         leaflet
           .marker({
             lat: point.city.location?.latitude,
             lng: point.city.location?.longitude,
           }, {
-            // icon: (point.city.name === selectedPoint.city)
-            //   ? currentCustomIcon
-            //   : defaultCustomIcon,
-            icon: defaultCustomIcon,
+            icon: (point.id === selectedCard)
+              ? currentCustomIcon
+              : defaultCustomIcon,
           })
           .addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, selectedCard]);
 
   return (
     <section

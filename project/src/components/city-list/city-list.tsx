@@ -1,4 +1,3 @@
-import React from 'react';
 import CityCard from '../city-card/city-card';
 import {OfferType} from '../../types/offer-type';
 
@@ -17,7 +16,6 @@ function CityList({offers, onCardHover}: CityListTypes): JSX.Element {
             offer={item}
             cardType="main"
             key={item.id}
-            // onMouseOver={(evt) => listItemHoverHandler(evt.target.value.id)}
             onMouseAction={onCardHover}
           />
         ))
