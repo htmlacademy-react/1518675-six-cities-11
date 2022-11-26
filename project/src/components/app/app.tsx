@@ -8,12 +8,22 @@ import Login from '../../pages/login/login';
 import {AuthorizationStatus, Url} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType} from '../../types/offer-type';
+import {useAppSelector} from '../../hooks';
+import Preloader from '../preloader/preloader';
 
 type AppTypes = {
   offers: OfferType[];
 }
 
 function App ({offers}: AppTypes) {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isLoading = useAppSelector((state) => state.isLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isLoading) {
+    return (
+      <Preloader/>
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -27,7 +37,7 @@ function App ({offers}: AppTypes) {
             path={Url.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
               >
                 <Favorites
                   offers={offers}
