@@ -1,11 +1,5 @@
 import {OfferType} from './types/offer-type';
 
-// const AuthorizationStatus = {
-//   Auth: 'Auth',
-//   NoAuth: 'NoAuth',
-//   Unknown: 'Unknown'
-// } as const;
-
 const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

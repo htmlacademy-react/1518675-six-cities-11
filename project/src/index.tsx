@@ -20,6 +20,5 @@ root.render(
       <ErrorMessage/>
       <App offers={offers}/>
     </Provider>
-
   </React.StrictMode>
 );

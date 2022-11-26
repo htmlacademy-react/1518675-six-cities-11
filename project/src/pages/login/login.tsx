@@ -3,7 +3,7 @@ import {useAppDispatch} from '../../hooks';
 import {useNavigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/data-type';
-import {APIRoute} from '../../const';
+import {Url} from '../../const';
 
 function Login () {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -14,6 +14,7 @@ function Login () {
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
+    navigate(Url.Main);
   };
 
   const submitHandle = (evt: FormEvent<HTMLFormElement>) => {
@@ -74,7 +75,6 @@ function Login () {
                 />
               </div>
               <button
-                onClick={() => navigate(APIRoute.Hotels)}
                 className="login__submit form__submit button"
                 type="submit"
               >

@@ -10,6 +10,7 @@ import PrivateRoute from '../private-route/private-route';
 import {OfferType} from '../../types/offer-type';
 import {useAppSelector} from '../../hooks';
 import Preloader from '../preloader/preloader';
+import NoData from '../no-data/no-data';
 
 type AppTypes = {
   offers: OfferType[];
@@ -18,6 +19,7 @@ type AppTypes = {
 function App ({offers}: AppTypes) {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isLoading = useAppSelector((state) => state.isLoading);
+  const dataStatus = useAppSelector((state) => state.noData);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isLoading) {
     return (
@@ -28,7 +30,7 @@ function App ({offers}: AppTypes) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Layout/>}>
+        <Route path='/' element={dataStatus ? <NoData/> : <Layout/>}>
           <Route
             index
             element={<Main offers={offers}/>}
@@ -55,7 +57,6 @@ function App ({offers}: AppTypes) {
           element={<Login/>}
         />
         <Route path='*' element={<NotFoundPage/>} />
-
       </Routes>
     </BrowserRouter>
   );
