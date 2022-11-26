@@ -12,9 +12,9 @@ type MainProps = {
 };
 
 function Main({offers}: MainProps): JSX.Element {
-
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
+
   const activeSorting = useAppSelector((state) => state.sorting);
 
   const [activeId, setActiveId] = useState<number | null>(null);

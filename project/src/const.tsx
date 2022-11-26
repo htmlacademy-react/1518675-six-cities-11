@@ -1,9 +1,22 @@
 import {OfferType} from './types/offer-type';
 
-const AuthorizationStatus = {
-  Auth: 'Auth',
-  NoAuth: 'NoAuth',
-  Unknown: 'Unknown'
+// const AuthorizationStatus = {
+//   Auth: 'Auth',
+//   NoAuth: 'NoAuth',
+//   Unknown: 'Unknown'
+// } as const;
+
+const enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+const APIRoute = {
+  Hotels:'/hotels',
+  Favorite: '/favorite',
+  Login: '/login',
+  Logout: '/logout'
 } as const;
 
 const Url = {
@@ -55,9 +68,12 @@ const MAX_OFFER_IMAGES = 6;
 
 const DEFAULT_SORTING = 'Popular';
 
+const TIMEOUT_SHOW_ERROR = 2000;
+
 export {
   AuthorizationStatus,
   Url,
+  APIRoute,
   OfferKind,
   CardType,
   MAX_NEARBY_OBJECTS,
@@ -65,5 +81,6 @@ export {
   CITIES,
   SORTING_METHODS,
   sortOffers,
-  DEFAULT_SORTING
+  DEFAULT_SORTING,
+  TIMEOUT_SHOW_ERROR
 };
