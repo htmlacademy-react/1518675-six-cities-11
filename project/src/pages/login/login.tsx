@@ -1,31 +1,76 @@
-import {FormEvent, useRef} from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/data-type';
 import {Url} from '../../const';
+import cn from 'classnames';
+import s from './login.module.scss';
 
-function Login () {
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+const formFields = {
+  email: 'E-mail',
+  password: 'Password'
+};
+
+type FieldProps = {
+  value: string;
+  error: boolean;
+  errorText: string;
+  regExp: RegExp;
+}
+
+type FormStateProps = {
+  [key: string]: FieldProps;
+}
+
+function Login() {
+  const [formState, setFormState] = useState<FormStateProps>({
+    email: {
+      value: '',
+      error: false,
+      errorText: 'Неправильный E-mail',
+      regExp: /^\S+@\S+\.\S+$/
+    },
+    password: {
+      value: '',
+      error: false,
+      errorText: 'Неправильно введён пароль',
+      regExp: /([0-9]{1,}[a-z]{1,})|([a-z]{1,}[0-9]{1,})/
+    }
+  });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
+    console.log('workSubmit');
     dispatch(loginAction(authData));
     navigate(Url.Main);
   };
 
-  const submitHandle = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
-    }
+    onSubmit({
+      login: formState.email.value,
+      password: formState.password.value
+    });
+  };
+
+  const handleChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = target;
+    const rule = formState[name].regExp;
+    const isCorrectValue = rule.exec(value);
+
+    setFormState({
+      ...formState,
+      [name]: {
+        value: value,
+        error: (isCorrectValue === null),
+        errorText: `Неправильно введён ${name}`,
+        regExp: rule
+      }
+    });
   };
 
   return (
@@ -34,9 +79,12 @@ function Login () {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link
+                to={Url.Main}
+                className="header__logo-link"
+              >
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -47,34 +95,39 @@ function Login () {
           <section className="login">
             <h1 className="login__title">Sign in</h1>
             <form
-              onSubmit={submitHandle}
+              onSubmit={handleSubmit}
               className="login__form form"
               action="src/components/Login/Login#"
               method="post"
             >
-              <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
-                <input
-                  ref={loginRef}
-                  className="login__input form__input"
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  required
-                />
-              </div>
-              <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
-                <input
-                  ref={passwordRef}
-                  className="login__input form__input"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  required
-                />
-              </div>
+              {
+                Object.entries(formFields).map(([key, value]) => {
+                  const isValid = formState[key].error;
+                  const inputClasses = cn('login__input form__input', {
+                    [s.formInputInvalid]: isValid
+                  });
+
+                  return (
+                    <div style={{position: 'relative'}} className="login__input-wrapper form__input-wrapper" key={key}>
+                      <label className="visually-hidden">{value}</label>
+                      <input
+                        className={inputClasses}
+                        type={key}
+                        name={key}
+                        placeholder={value}
+                        required
+                        value={formState[key].value}
+                        onChange={handleChange}
+                      />
+                      {
+                        formState[key].error && <span style={{display: 'block', position: 'absolute', bottom: '0', fontSize: '13px', color: 'darkred'}}>{formState[key].errorText}</span>
+                      }
+                    </div>
+                  );
+                })
+              }
               <button
+                style={{marginTop: '20px'}}
                 className="login__submit form__submit button"
                 type="submit"
               >

@@ -1,5 +1,7 @@
 import Logo from '../logo/logo';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, Url} from '../../const';
+import {Link} from 'react-router-dom';
+import {dropToken} from '../../services/token';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;
@@ -31,18 +33,25 @@ function Header({authorizationStatus}: HeaderProps): JSX.Element {
                       </a>
                     </li>
                     <li className="header__nav-item">
-                      <a className="header__nav-link" href="#">
+                      <Link
+                        to={Url.Login}
+                        className="header__nav-link"
+                        onClick={() => dropToken()}
+                      >
                         <span className="header__signout">Sign out</span>
-                      </a>
+                      </Link>
                     </li>
                   </>
                   :
                   <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="/login">
+                    <Link
+                      to={Url.Login}
+                      className="header__nav-link header__nav-link--profile"
+                    >
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__login">Sign in</span>
-                    </a>
+                    </Link>
                   </li>
               }
             </ul>
