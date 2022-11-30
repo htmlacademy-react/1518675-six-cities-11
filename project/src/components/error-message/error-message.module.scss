@@ -1,13 +1,12 @@
 .error {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%);
+  top: 2%;
+  left: 2%;
   z-index: 500;
   padding: 12px 100px;
   background-color: #d96666;
   color: white;
   border-radius: 5px;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
 }

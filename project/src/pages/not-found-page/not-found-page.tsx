@@ -3,7 +3,7 @@ import s from './not-found-page.module.css';
 import {Url} from '../../const';
 
 
-function NotFoundPage () {
+function NotFoundPage() {
   return (
     <div className={s.wrapper}>
       <h1>Page not found</h1>

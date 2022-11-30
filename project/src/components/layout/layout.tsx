@@ -1,10 +1,13 @@
 import {Outlet} from 'react-router-dom';
 import Header from '../header/header';
+import {useAppSelector} from '../../hooks';
 
-function Layout () {
+function Layout() {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   return (
     <>
-      <Header />
+      <Header authorizationStatus={authorizationStatus}/>
 
       <Outlet/>
     </>
