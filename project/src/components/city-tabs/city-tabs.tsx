@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import {useAppDispatch} from '../../hooks';
-import {changeCity} from '../../store/action';
+import {changeCity} from '../../store/data-offers/data-offers';
 import {CITIES} from '../../const';
 
 type CityTabsProps = {

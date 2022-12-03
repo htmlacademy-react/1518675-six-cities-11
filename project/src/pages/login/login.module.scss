@@ -1,3 +1,19 @@
+.inputWrapper {
+  position: relative;
+}
+
 .formInputInvalid {
-  box-shadow: 0px 1px 4px 3px rgba(212, 95, 95, 1);
+  box-shadow: 0 1px 4px 3px rgba(212, 95, 95, 1);
+}
+
+.errorText {
+  display: block;
+  position: absolute;
+  bottom: 4px;
+  font-size: 13px;
+  color: darkred;
+}
+
+.buttonDecoration {
+  margin-top: 20px;
 }

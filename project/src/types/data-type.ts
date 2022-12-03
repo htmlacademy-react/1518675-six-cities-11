@@ -9,4 +9,8 @@ type AuthData = {
   password: string;
 };
 
-export type {UserData, AuthData};
+type UserError = {
+  error: string | null;
+}
+
+export type {UserData, AuthData, UserError};

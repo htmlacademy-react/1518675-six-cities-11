@@ -6,6 +6,12 @@ const enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+const enum NameSpace {
+  Data = 'DATA',
+  Offer = 'OFFER',
+  User = 'USER'
+}
+
 const APIRoute = {
   Hotels:'/hotels',
   Favorite: '/favorite',
@@ -76,5 +82,6 @@ export {
   SORTING_METHODS,
   sortOffers,
   DEFAULT_SORTING,
-  TIMEOUT_SHOW_ERROR
+  TIMEOUT_SHOW_ERROR,
+  NameSpace
 };
