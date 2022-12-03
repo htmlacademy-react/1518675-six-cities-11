@@ -43,7 +43,6 @@ function Login() {
   // const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
-    console.log('workSubmit');
     dispatch(loginAction(authData));
     // navigate(Url.Main);
   };

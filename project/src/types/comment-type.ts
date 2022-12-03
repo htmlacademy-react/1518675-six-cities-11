@@ -13,4 +13,8 @@ type CommentType = {
   user: User;
 }
 
-export type {CommentType};
+type CommentsType = {
+  comments: CommentType[];
+}
+
+export type {CommentType, CommentsType};

@@ -50,6 +50,7 @@ function Sorting({activeSorting}: SortingProps) {
               <li
                 className={optionClass}
                 onClick={() => {
+                  console.log(sorting);
                   setOpen(!open);
                   dispatch(changeSorting({sorting}));
                 }}

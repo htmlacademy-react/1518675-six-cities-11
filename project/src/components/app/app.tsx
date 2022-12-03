@@ -10,25 +10,19 @@ import PrivateRoute from '../private-route/private-route';
 import {OfferType} from '../../types/offer-type';
 import {useAppSelector} from '../../hooks';
 import Preloader from '../preloader/preloader';
-import NoData from '../no-data/no-data';
+// import NoData from '../no-data/no-data';
 import ErrorMessage from '../error-message/error-message';
-import {getAuthCheckedStatus, getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {getErrorStatus, getOffersDataLoadingStatus} from '../../store/data-offers/selectors';
-// import {DomEvent} from 'leaflet';
 
 type AppTypes = {
   offers: OfferType[];
 }
 
 function App ({offers}: AppTypes) {
-  // const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  // const isLoading = useAppSelector((state) => state.isLoading);
-  // const dataStatus = useAppSelector((state) => state.noData);
-
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  // const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
-
   const hasError = useAppSelector(getErrorStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
@@ -45,7 +39,7 @@ function App ({offers}: AppTypes) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={isAuthChecked ? <NoData/> : <Layout/>}>
+        <Route path='/' element={<Layout/>}>
           <Route
             index
             element={<Main offers={offers}/>}

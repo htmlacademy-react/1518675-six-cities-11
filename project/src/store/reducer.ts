@@ -1,12 +1,12 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {
-  changeCity,
-  changeSorting,
-  loadOffers,
-  setError,
-  setNoDataStatus,
-  setOffersDataLoadingStatus
-} from './action';
+// import {
+//   changeCity,
+//   changeSorting,
+//   loadOffers,
+//   setError,
+//   setNoDataStatus,
+//   setOffersDataLoadingStatus
+// } from './action';
 import {DEFAULT_SORTING} from '../const';
 import {OfferType} from '../types/offer-type';
 
@@ -30,26 +30,26 @@ const initialState: InitialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, action) => {
-      const {city} = action.payload;
-      state.city = city;
-    })
-    .addCase(changeSorting, (state, action) => {
-      const {sorting} = action.payload;
-      state.sorting = sorting;
-    })
-    .addCase(loadOffers, (state, action) => {
-      state.offers = action.payload;
-    })
-    .addCase(setOffersDataLoadingStatus, (state, action) => {
-      state.isLoading = action.payload;
-    })
-    .addCase(setNoDataStatus, (state, action) => {
-      state.noData = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
-    });
+    // .addCase(changeCity, (state, action) => {
+    //   const {city} = action.payload;
+    //   state.city = city;
+    // })
+    // .addCase(changeSorting, (state, action) => {
+    //   const {sorting} = action.payload;
+    //   state.sorting = sorting;
+    // })
+    // .addCase(loadOffers, (state, action) => {
+    //   state.offers = action.payload;
+    // })
+    // .addCase(setOffersDataLoadingStatus, (state, action) => {
+    //   state.isLoading = action.payload;
+    // })
+    // .addCase(setNoDataStatus, (state, action) => {
+    //   state.noData = action.payload;
+    // })
+    // .addCase(setError, (state, action) => {
+    //   state.error = action.payload;
+    // });
 });
 
 export {reducer};

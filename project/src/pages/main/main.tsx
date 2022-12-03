@@ -6,15 +6,16 @@ import Sorting from '../../components/sorting/sorting';
 import {useAppSelector} from '../../hooks';
 import {useState} from 'react';
 import {sortOffers} from '../../const';
+import {getActiveCity, getActiveSorting, getOffers} from '../../store/data-offers/selectors';
 
 type MainProps = {
   offers: OfferType[];
 };
 
 function Main({offers}: MainProps): JSX.Element {
-  const activeCity = useAppSelector((state) => state.city);
-  const allOffers = useAppSelector((state) => state.offers);
-  const activeSorting = useAppSelector((state) => state.sorting);
+  const activeCity = useAppSelector(getActiveCity);
+  const allOffers = useAppSelector(getOffers);
+  const activeSorting = useAppSelector(getActiveSorting);
 
   const [activeId, setActiveId] = useState<number | null>(null);
 

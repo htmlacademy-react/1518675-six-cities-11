@@ -12,12 +12,12 @@ const enum NameSpace {
   User = 'USER'
 }
 
-const APIRoute = {
-  Hotels:'/hotels',
-  Favorite: '/favorite',
-  Login: '/login',
-  Logout: '/logout'
-} as const;
+const enum APIRoute {
+  Hotels = '/hotels',
+  Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout'
+}
 
 const Url = {
   Main: '/',

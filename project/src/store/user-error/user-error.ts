@@ -1,7 +1,7 @@
 import {UserError} from '../../types/data-type';
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
-import {setError} from '../action';
+// import {setError} from '../action';
 
 const initialState: UserError = {
   error: null
@@ -13,9 +13,8 @@ export const userError = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(setError, (state, action) => {
-        state.error = action.payload;
-      })
-    ;
+      // .addCase(setError, (state, action) => {
+      //   state.error = action.payload;
+      // });
   }
 });
