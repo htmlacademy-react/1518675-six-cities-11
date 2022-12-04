@@ -1,4 +1,4 @@
 import {createAction} from '@reduxjs/toolkit';
-import {APIRoute} from '../const';
+import {Url} from '../const';
 
-export const redirectToRoute = createAction<APIRoute>('user/redirectToRoute');
+export const redirectToRoute = createAction<Url>('redirectToRoute');

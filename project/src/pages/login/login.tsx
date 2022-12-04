@@ -6,6 +6,7 @@ import {AuthData} from '../../types/data-type';
 import {Url} from '../../const';
 import cn from 'classnames';
 import s from './login.module.scss';
+import {redirectToRoute} from '../../store/action';
 
 const formFields = {
   email: 'E-mail',
@@ -40,11 +41,10 @@ function Login() {
   });
 
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
-    // navigate(Url.Main);
+    dispatch(redirectToRoute(Url.Main));
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {

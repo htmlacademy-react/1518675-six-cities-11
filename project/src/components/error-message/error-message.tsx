@@ -1,5 +1,5 @@
 import s from './error-message.module.scss';
-import {getErrorStatus} from '../../store/data-offers/selectors';
+import {getErrorStatus} from '../../store/offers/selectors';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchOffersAction} from '../../store/api-actions';
 

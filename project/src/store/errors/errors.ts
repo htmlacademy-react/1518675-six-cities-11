@@ -7,7 +7,7 @@ const initialState: UserError = {
   error: null
 };
 
-export const userError = createSlice({
+export const errors = createSlice({
   name: NameSpace.User,
   initialState,
   reducers: {},

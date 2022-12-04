@@ -7,36 +7,13 @@ import Layout from '../layout/layout';
 import Login from '../../pages/login/login';
 import {Url} from '../../const';
 import PrivateRoute from '../private-route/private-route';
-import {OfferType} from '../../types/offer-type';
 import {useAppSelector} from '../../hooks';
-import Preloader from '../preloader/preloader';
-// import NoData from '../no-data/no-data';
-import ErrorMessage from '../error-message/error-message';
-import {getAuthCheckedStatus, getAuthorizationStatus} from '../../store/user-process/selectors';
-import {getErrorStatus, getOffersDataLoadingStatus} from '../../store/data-offers/selectors';
+import {getAuthorizationStatus} from '../../store/authorization/selectors';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
-type AppTypes = {
-  offers: OfferType[];
-}
-
-function App ({offers}: AppTypes) {
+function App() {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
-  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
-  const isNoData = useAppSelector(getErrorStatus);
-
-  if (!isAuthChecked || isOffersDataLoading) {
-    return (
-      <Preloader/>
-    );
-  }
-
-  if (isNoData) {
-    return (
-      <ErrorMessage/>);
-  }
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -44,7 +21,7 @@ function App ({offers}: AppTypes) {
         <Route path='/' element={<Layout/>}>
           <Route
             index
-            element={<Main offers={offers}/>}
+            element={<Main/>}
           />
           <Route
             path={Url.Favorites}
@@ -52,9 +29,7 @@ function App ({offers}: AppTypes) {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <Favorites
-                  offers={offers}
-                />
+                <Favorites/>
               </PrivateRoute>
             }
           />
@@ -67,7 +42,7 @@ function App ({offers}: AppTypes) {
           path={Url.Login}
           element={<Login/>}
         />
-        <Route path='*' element={<NotFoundPage/>} />
+        <Route path='*' element={<NotFoundPage/>}/>
       </Routes>
     </HistoryRouter>
   );

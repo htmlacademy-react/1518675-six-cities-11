@@ -3,11 +3,12 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 // import {requireAuthorization, setError} from './action';
 import {saveToken, dropToken} from '../services/token';
-import {APIRoute} from '../const';
-import {AuthData, UserData} from '../types/data-type';
+import {APIRoute, Url} from '../const';
+import {AuthData, DataOffer, UserData} from '../types/data-type';
 import {OfferType} from '../types/offer-type';
 // import {store} from './';
 import {redirectToRoute} from './action';
+import {CommentType} from '../types/comments-type';
 
 export const clearErrorAction = createAsyncThunk(
   'data/clearError',
@@ -24,7 +25,7 @@ export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchOffers',
+  'fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<OfferType[]>(APIRoute.Hotels);
     return data;
@@ -36,10 +37,22 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'user/checkAuth',
+  'checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     await api.get(APIRoute.Login);
   }
+);
+
+export const fetchSingleOfferAction = createAsyncThunk<OfferType, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchSingleOffer',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferType>(`/hotels/${id}`);
+    return data;
+  },
 );
 
 export const loginAction = createAsyncThunk<void, AuthData, {
@@ -47,11 +60,15 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'user/login',
+  'login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(redirectToRoute(APIRoute.Hotels));
+    try {
+      const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(token);
+      dispatch(redirectToRoute(Url.Main));
+    } catch (err) {
+      throw err;
+    }
   }
 );
 
@@ -60,9 +77,34 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'user/logout',
+  'logout',
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
   }
+);
+
+export const fetchCommentsAction = createAsyncThunk<CommentType[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchComments',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<CommentType[]>(`/comments/${id}`);
+    return data;
+  },
+);
+
+
+export const fetchNearbyOffersAction = createAsyncThunk<OfferType[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchComments',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferType[]>(`/hotels/${id}/nearby`);
+    return data;
+  },
 );

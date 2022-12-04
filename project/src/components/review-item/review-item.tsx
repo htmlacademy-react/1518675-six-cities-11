@@ -1,11 +1,10 @@
-import {CommentType} from '../../types/comment-type';
+import {CommentType} from '../../types/comments-type';
 
 type ReviewItemProps = {
   review: CommentType;
 }
 
 function ReviewItem({review}: ReviewItemProps): JSX.Element {
-
   const {avatarUrl, name} = review.user;
 
   return (

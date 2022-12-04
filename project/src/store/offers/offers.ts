@@ -1,17 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {DEFAULT_SORTING, NameSpace} from '../../const';
-import {DataOffers} from '../../types/state';
+import {DEFAULT_SORTING, FetchStatus, NameSpace} from '../../const';
 import {fetchOffersAction} from '../api-actions';
+import {OfferType} from '../../types/offer-type';
 
-const initialState: DataOffers = {
+type Offers = {
+  offers: OfferType[];
+  offersStatus: FetchStatus;
+  city: string;
+  sorting: string;
+  noData: boolean;
+};
+
+const initialState: Offers = {
   offers: [],
-  isLoading: false,
+  offersStatus: FetchStatus.Idle,
   city: 'Amsterdam',
   sorting: DEFAULT_SORTING,
   noData: false
 };
 
-export const dataOffers = createSlice({
+export const offers = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
@@ -27,19 +35,18 @@ export const dataOffers = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
-        state.isLoading = true;
-        state.noData = false;
+        state.offersStatus = FetchStatus.Loading;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
-        state.isLoading = false;
+        state.offersStatus = FetchStatus.Success;
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offers = [];
-        state.isLoading = false;
+        state.offersStatus = FetchStatus.Failed;
         state.noData = true;
       });
   }
 });
 
-export const {changeSorting, changeCity} = dataOffers.actions;
+export const {changeSorting, changeCity} = offers.actions;

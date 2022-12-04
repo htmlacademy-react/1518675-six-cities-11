@@ -13,4 +13,8 @@ type UserError = {
   error: string | null;
 }
 
-export type {UserData, AuthData, UserError};
+type DataOffer = {
+  id: string
+}
+
+export type {UserData, AuthData, UserError, DataOffer};

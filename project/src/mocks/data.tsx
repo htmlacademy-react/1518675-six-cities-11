@@ -1,5 +1,5 @@
 import {OfferType} from '../types/offer-type';
-import {CommentType} from '../types/comment-type';
+import {CommentsType} from '../types/comments-type';
 
 const offers: OfferType[] = [
   {
@@ -403,7 +403,7 @@ const offers: OfferType[] = [
   }
 ];
 
-const comments: CommentType[] = [
+const comments: CommentsType[] = [
   {
     id: 1,
     user: {

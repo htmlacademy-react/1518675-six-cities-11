@@ -9,22 +9,32 @@ const enum AuthorizationStatus {
 const enum NameSpace {
   Data = 'DATA',
   Offer = 'OFFER',
-  User = 'USER'
+  User = 'USER',
+  Comments = 'COMMENTS',
+  NearbyOffers = 'NEARBY_OFFERS'
 }
 
 const enum APIRoute {
   Hotels = '/hotels',
   Favorite = '/favorite',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Comments = 'comments'
 }
 
-const Url = {
-  Main: '/',
-  Favorites: '/favorites',
-  Login: '/login',
-  Offer: '/offer/:id',
-} as const;
+const enum Url {
+  Main = '/',
+  Favorites = '/favorites',
+  Login = '/login',
+  Offer = '/offer/:id',
+}
+
+const enum FetchStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Failed = 'Failed'
+}
 
 const OfferKind = {
   PrivateRoom:'private room',
@@ -83,5 +93,6 @@ export {
   sortOffers,
   DEFAULT_SORTING,
   TIMEOUT_SHOW_ERROR,
-  NameSpace
+  NameSpace,
+  FetchStatus
 };
