@@ -1,19 +1,21 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Layout from '../layout/layout';
 import Login from '../../pages/login/login';
-import {AuthorizationStatus, Url} from '../../const';
+import {Url} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType} from '../../types/offer-type';
 import {useAppSelector} from '../../hooks';
 import Preloader from '../preloader/preloader';
 // import NoData from '../no-data/no-data';
 import ErrorMessage from '../error-message/error-message';
-import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getAuthCheckedStatus, getAuthorizationStatus} from '../../store/user-process/selectors';
 import {getErrorStatus, getOffersDataLoadingStatus} from '../../store/data-offers/selectors';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type AppTypes = {
   offers: OfferType[];
@@ -21,23 +23,23 @@ type AppTypes = {
 
 function App ({offers}: AppTypes) {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  // const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
-  const hasError = useAppSelector(getErrorStatus);
+  const isNoData = useAppSelector(getErrorStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  if (!isAuthChecked || isOffersDataLoading) {
     return (
       <Preloader/>
     );
   }
 
-  if (hasError) {
+  if (isNoData) {
     return (
       <ErrorMessage/>);
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path='/' element={<Layout/>}>
           <Route
@@ -67,7 +69,7 @@ function App ({offers}: AppTypes) {
         />
         <Route path='*' element={<NotFoundPage/>} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

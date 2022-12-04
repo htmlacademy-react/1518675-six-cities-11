@@ -13,7 +13,7 @@ export type UserProcess = {
 export type DataOffers = {
   offers: OfferType[];
   isLoading: boolean;
-  noData: boolean;
   city: string;
   sorting: string;
+  noData: boolean;
 };

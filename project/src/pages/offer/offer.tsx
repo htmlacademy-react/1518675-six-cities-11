@@ -13,6 +13,10 @@ import {MAX_NEARBY_OBJECTS} from '../../const';
 function Offer(): JSX.Element {
 
   const offerId = Number(useParams().id);
+
+
+
+
   const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description} = offers[offerId - 1];
 
   const ratingWidth = calculateWidthRating(rating);

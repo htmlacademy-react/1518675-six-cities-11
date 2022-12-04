@@ -6,9 +6,9 @@ import {fetchOffersAction} from '../api-actions';
 const initialState: DataOffers = {
   offers: [],
   isLoading: false,
-  noData: false,
   city: 'Amsterdam',
-  sorting: DEFAULT_SORTING
+  sorting: DEFAULT_SORTING,
+  noData: false
 };
 
 export const dataOffers = createSlice({
@@ -28,6 +28,7 @@ export const dataOffers = createSlice({
     builder
       .addCase(fetchOffersAction.pending, (state) => {
         state.isLoading = true;
+        state.noData = false;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
