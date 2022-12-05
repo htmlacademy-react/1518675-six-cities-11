@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {FetchStatus, NameSpace} from '../../const';
-import {CommentType} from '../../types/comments-type';
+import {CommentType} from '../../types/comment-type';
 import {fetchCommentsAction} from '../api-actions';
 
 type CommentsType = {

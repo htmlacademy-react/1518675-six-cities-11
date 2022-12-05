@@ -4,11 +4,11 @@ import {AppDispatch, State} from '../types/state.js';
 // import {requireAuthorization, setError} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, Url} from '../const';
-import {AuthData, DataOffer, UserData} from '../types/data-type';
+import {AuthData, NewComment, UserData} from '../types/data-type';
 import {OfferType} from '../types/offer-type';
 // import {store} from './';
 import {redirectToRoute} from './action';
-import {CommentType} from '../types/comments-type';
+import {CommentType} from '../types/comment-type';
 
 export const clearErrorAction = createAsyncThunk(
   'data/clearError',
@@ -67,6 +67,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
       saveToken(token);
       dispatch(redirectToRoute(Url.Main));
     } catch (err) {
+      console.log(err);
       throw err;
     }
   }
@@ -96,15 +97,31 @@ export const fetchCommentsAction = createAsyncThunk<CommentType[], string, {
   },
 );
 
-
 export const fetchNearbyOffersAction = createAsyncThunk<OfferType[], string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'fetchComments',
+  'fetchNearbyOffers',
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get<OfferType[]>(`/hotels/${id}/nearby`);
     return data;
   },
+);
+
+export const newCommentAction = createAsyncThunk<void, NewComment, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'newComment',
+  async ({comment: comment, rating}, {dispatch, extra: api}) => {
+    try {
+      const {data: {}} = await api.post<NewComment>(`comments/10`, {comment, rating});
+      dispatch(redirectToRoute(Url.Main));
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 );

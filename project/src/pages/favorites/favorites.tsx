@@ -3,7 +3,7 @@ import CityCard from '../../components/city-card/city-card';
 import FavoritesCitySection from '../../components/favorites-city-section/favorites-city-section';
 
 type FavoritesType = {
-  offers: OfferType[];
+  offers?: OfferType[] | undefined;
 }
 
 type FilteredOffersType = {

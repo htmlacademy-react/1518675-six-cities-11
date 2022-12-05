@@ -13,8 +13,9 @@ type UserError = {
   error: string | null;
 }
 
-type DataOffer = {
-  id: string
+type NewComment = {
+  comment: string;
+  rating: number;
 }
 
-export type {UserData, AuthData, UserError, DataOffer};
+export type {UserData, AuthData, UserError, NewComment};

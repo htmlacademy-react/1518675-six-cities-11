@@ -13,40 +13,32 @@ import {getOffer, getSingleOfferStatus} from '../../store/single-offer/selectors
 import Preloader from '../../components/preloader/preloader';
 import ErrorMessage from '../../components/error-message/error-message';
 import {fetchCommentsAction, fetchNearbyOffersAction, fetchSingleOfferAction} from '../../store/api-actions';
-import {getComments, getCommentsStatus} from '../../store/comments/selectors';
+import {getComments} from '../../store/comments/selectors';
 import {getNearbyOffers, getNearbyOffersStatus} from '../../store/nearby-offers/selectors';
 
 function Offer(): JSX.Element {
   const offerStatus = useAppSelector(getSingleOfferStatus);
-  const commentsStatus = useAppSelector(getCommentsStatus);
   const nearbyOffersStatus = useAppSelector(getNearbyOffersStatus);
 
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
 
   useEffect(() => {
-    if (offerId != null) {
+    if (offerId) {
       dispatch(fetchSingleOfferAction(offerId));
       dispatch(fetchCommentsAction(offerId));
       dispatch(fetchNearbyOffersAction(offerId));
     }
-  }, []);
+  }, [offerId, dispatch]);
 
   const singleOffer = useAppSelector(getOffer);
   const offerComments = useAppSelector(getComments);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
-  if (offerStatus.isLoading
-    || singleOffer === null
-    || offerId === null
-    || offerComments === null
-    || nearbyOffers === null
-    || commentsStatus.isLoading
-    || nearbyOffersStatus.isLoading
-  ) {
+  if (offerStatus.isLoading || nearbyOffersStatus.isLoading || singleOffer === null) {
     return (
       <Preloader/>
-    )
+    );
   }
 
   if (offerStatus.isError) {
@@ -57,8 +49,6 @@ function Offer(): JSX.Element {
 
   const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description} = singleOffer;
   const ratingWidth = calculateWidthRating(rating);
-
-  console.log('OFFER_COMMENTS: ', offerComments);
 
   return (
     <div className="page">

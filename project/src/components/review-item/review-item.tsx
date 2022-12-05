@@ -1,4 +1,4 @@
-import {CommentType} from '../../types/comments-type';
+import {CommentType} from '../../types/comment-type';
 
 type ReviewItemProps = {
   review: CommentType;

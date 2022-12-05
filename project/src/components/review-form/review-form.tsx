@@ -1,5 +1,9 @@
-import {useState} from 'react';
+import {FormEvent, useState} from 'react';
 import RatingItem from '../rating-item/rating-item';
+import {NewComment} from '../../types/data-type';
+import {newCommentAction} from '../../store/api-actions';
+// import {redirectToRoute} from '../../store/action';
+import {useAppDispatch} from '../../hooks';
 
 const typesRating = {
   5: 'perfect',
@@ -11,15 +15,41 @@ const typesRating = {
 
 function ReviewForm () {
   const [text, setText] = useState('');
+  const [currentRating, setCurrentRating] = useState(0);
 
-  const [, setCurrentRating] = useState(0);
+  const dispatch = useAppDispatch();
+
+  const validateCommentForm = (comment: string, rating: number) => {
+    if (comment.length > 50 && comment.length < 300 && rating) {
+      return true;
+    }
+    return false;
+  };
 
   const handleRatingChange = (ratingNumber: number) => {
     setCurrentRating(ratingNumber);
   };
 
+  const onSubmit = (comment: NewComment) => {
+    dispatch(newCommentAction(comment));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    onSubmit({
+      comment: text,
+      rating: currentRating
+    });
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      onSubmit={handleSubmit}
+      className="reviews__form form"
+      action="#"
+      method="post"
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
@@ -46,13 +76,28 @@ function ReviewForm () {
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set
-          <span className="reviews__star">rating</span>
+          &nbsp;<span className="reviews__star">rating</span>&nbsp;
           and describe your stay with at least
-          <b className="reviews__text-amount">50 characters</b>.
+          &nbsp;<b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>
-          Submit
-        </button>
+        {
+          validateCommentForm(text, currentRating)
+            ?
+            <button
+              className="reviews__submit form__submit button"
+              type="submit"
+            >
+              Submit
+            </button>
+            :
+            <button
+              className="reviews__submit form__submit button"
+              type="submit"
+              disabled
+            >
+              Submit
+            </button>
+        }
       </div>
     </form>
   );

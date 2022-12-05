@@ -1,15 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {FetchStatus, NameSpace} from '../../const';
-import {fetchNearbyOffersAction, fetchSingleOfferAction} from '../api-actions';
+import {fetchNearbyOffersAction} from '../api-actions';
 import {OfferType} from '../../types/offer-type';
 
 type nearbyOffersType = {
-  nearbyOffers: OfferType[] | null;
+  nearbyOffers: OfferType[];
   nearbyOffersStatus: FetchStatus;
 }
 
 const initialState: nearbyOffersType = {
-  nearbyOffers: null,
+  nearbyOffers: [],
   nearbyOffersStatus: FetchStatus.Idle
 };
 
