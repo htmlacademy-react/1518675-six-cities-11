@@ -16,6 +16,7 @@ type UserError = {
 type NewComment = {
   comment: string;
   rating: number;
+  id: string | undefined;
 }
 
 export type {UserData, AuthData, UserError, NewComment};

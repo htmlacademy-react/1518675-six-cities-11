@@ -25,14 +25,9 @@ export const singleOffer = createSlice({
       .addCase(fetchSingleOfferAction.fulfilled, (state, action) => {
         state.offer = action.payload;
         state.offerStatus = FetchStatus.Success;
-        // state.offers = action.payload;
-        // state.isLoading = false;
       })
       .addCase(fetchSingleOfferAction.rejected, (state) => {
         state.offerStatus = FetchStatus.Failed;
-        // state.offers = [];
-        // state.isLoading = false;
-        // state.noData = true;
       });
   }
 });

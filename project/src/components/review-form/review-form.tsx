@@ -1,9 +1,12 @@
-import {FormEvent, useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
 import RatingItem from '../rating-item/rating-item';
-import {NewComment} from '../../types/data-type';
 import {newCommentAction} from '../../store/api-actions';
-// import {redirectToRoute} from '../../store/action';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useParams} from 'react-router-dom';
+import {getSendingCommentStatus} from '../../store/comments/selectors';
+import {CommentType} from '../../types/comment-type';
+import cn from 'classnames';
+import s from './review-form.module.scss';
 
 const typesRating = {
   5: 'perfect',
@@ -14,9 +17,17 @@ const typesRating = {
 };
 
 function ReviewForm () {
+  const sendingCommentStatus = useAppSelector(getSendingCommentStatus);
+
   const [text, setText] = useState('');
   const [currentRating, setCurrentRating] = useState(0);
 
+  useEffect(() => {
+    setText('');
+    setCurrentRating(0);
+  }, [sendingCommentStatus.isSuccess]);
+
+  const currentId = useParams().id;
   const dispatch = useAppDispatch();
 
   const validateCommentForm = (comment: string, rating: number) => {
@@ -30,7 +41,7 @@ function ReviewForm () {
     setCurrentRating(ratingNumber);
   };
 
-  const onSubmit = (comment: NewComment) => {
+  const onSubmit = (comment: CommentType) => {
     dispatch(newCommentAction(comment));
   };
 
@@ -39,9 +50,15 @@ function ReviewForm () {
 
     onSubmit({
       comment: text,
-      rating: currentRating
+      rating: currentRating,
+      id: currentId
     });
   };
+
+  const submitButtonClasses = cn('reviews__submit form__submit button', {
+    [s.disabled]: !validateCommentForm(text, currentRating),
+    [s.preloaded]: sendingCommentStatus.isLoading
+  });
 
   return (
     <form
@@ -80,24 +97,13 @@ function ReviewForm () {
           and describe your stay with at least
           &nbsp;<b className="reviews__text-amount">50 characters</b>.
         </p>
-        {
-          validateCommentForm(text, currentRating)
-            ?
-            <button
-              className="reviews__submit form__submit button"
-              type="submit"
-            >
-              Submit
-            </button>
-            :
-            <button
-              className="reviews__submit form__submit button"
-              type="submit"
-              disabled
-            >
-              Submit
-            </button>
-        }
+        <button
+          className={submitButtonClasses}
+          type="submit"
+          tabIndex="-1"
+        >
+          <span className={s.wrapperButton}>Submit<span className={s.caption}>ting..</span></span>
+        </button>
       </div>
     </form>
   );

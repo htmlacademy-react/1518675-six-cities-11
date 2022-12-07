@@ -9,6 +9,7 @@ import {OfferType} from '../types/offer-type';
 // import {store} from './';
 import {redirectToRoute} from './action';
 import {CommentType} from '../types/comment-type';
+import {pushNotification} from './notifications/notifications';
 
 export const clearErrorAction = createAsyncThunk(
   'data/clearError',
@@ -27,8 +28,13 @@ export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
 }>(
   'fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<OfferType[]>(APIRoute.Hotels);
-    return data;
+    try {
+      const {data} = await api.get<OfferType[]>(APIRoute.Hotels);
+      return data;
+    } catch (err) {
+      dispatch(pushNotification({type: 'error', message: 'Error loading offers'}))
+      throw err;
+    }
   },
 );
 
@@ -109,16 +115,17 @@ export const fetchNearbyOffersAction = createAsyncThunk<OfferType[], string, {
   },
 );
 
-export const newCommentAction = createAsyncThunk<void, NewComment, {
+export const newCommentAction = createAsyncThunk<CommentType[], CommentType, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'newComment',
-  async ({comment: comment, rating}, {dispatch, extra: api}) => {
+  async ({comment: comment, rating, id}, {dispatch, extra: api}) => {
     try {
-      const {data: {}} = await api.post<NewComment>(`comments/10`, {comment, rating});
+      const {data} = await api.post<CommentType[]>(`comments/${id}`, {comment, rating});
       dispatch(redirectToRoute(Url.Main));
+      return data;
     } catch (err) {
       console.log(err);
       throw err;

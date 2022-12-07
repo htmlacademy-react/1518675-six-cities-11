@@ -11,7 +11,8 @@ const enum NameSpace {
   Offer = 'OFFER',
   User = 'USER',
   Comments = 'COMMENTS',
-  NearbyOffers = 'NEARBY_OFFERS'
+  NearbyOffers = 'NEARBY_OFFERS',
+  Notifications = 'NOTIFICATIONS'
 }
 
 const enum APIRoute {

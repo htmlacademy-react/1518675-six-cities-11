@@ -10,14 +10,15 @@ function ErrorMessage(): JSX.Element | null {
   return (error)
     ?
     <div className={s.error}>
-      {error}
+      <h1>Something went wrong</h1>
       <button
+        className={s.button}
         onClick={() => {
           dispatch(fetchOffersAction());
         }}
         type="button"
       >
-        Попробовать ещё раз
+        Try again
       </button>
     </div>
     : null;

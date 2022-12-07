@@ -13,7 +13,7 @@ import {getOffer, getSingleOfferStatus} from '../../store/single-offer/selectors
 import Preloader from '../../components/preloader/preloader';
 import ErrorMessage from '../../components/error-message/error-message';
 import {fetchCommentsAction, fetchNearbyOffersAction, fetchSingleOfferAction} from '../../store/api-actions';
-import {getComments} from '../../store/comments/selectors';
+import {getComments, getSendingCommentStatus} from '../../store/comments/selectors';
 import {getNearbyOffers, getNearbyOffersStatus} from '../../store/nearby-offers/selectors';
 
 function Offer(): JSX.Element {
@@ -35,17 +35,19 @@ function Offer(): JSX.Element {
   const offerComments = useAppSelector(getComments);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
+  if (offerStatus.isError) {
+    return (
+      <ErrorMessage/>
+    );
+  }
+
   if (offerStatus.isLoading || nearbyOffersStatus.isLoading || singleOffer === null) {
     return (
       <Preloader/>
     );
   }
 
-  if (offerStatus.isError) {
-    return (
-      <ErrorMessage/>
-    );
-  }
+
 
   const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description} = singleOffer;
   const ratingWidth = calculateWidthRating(rating);
