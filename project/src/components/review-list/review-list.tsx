@@ -6,7 +6,6 @@ type ReviewListProps = {
 }
 
 function ReviewList({comments}: ReviewListProps): JSX.Element {
-
   return (
     <ul className="reviews__list">
       {

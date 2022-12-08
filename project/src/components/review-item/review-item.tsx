@@ -5,7 +5,6 @@ type ReviewItemProps = {
 }
 
 function ReviewItem({review}: ReviewItemProps): JSX.Element {
-
   const {avatarUrl, name} = review.user;
 
   return (

@@ -6,19 +6,36 @@ const enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const APIRoute = {
-  Hotels:'/hotels',
-  Favorite: '/favorite',
-  Login: '/login',
-  Logout: '/logout'
-} as const;
+const enum NameSpace {
+  Data = 'DATA',
+  Offer = 'OFFER',
+  User = 'USER',
+  Comments = 'COMMENTS',
+  NearbyOffers = 'NEARBY_OFFERS',
+  Notifications = 'NOTIFICATIONS'
+}
 
-const Url = {
-  Main: '/',
-  Favorites: '/favorites',
-  Login: '/login',
-  Offer: '/offer/:id',
-} as const;
+const enum APIRoute {
+  Hotels = '/hotels',
+  Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+  Comments = 'comments'
+}
+
+const enum Url {
+  Main = '/',
+  Favorites = '/favorites',
+  Login = '/login',
+  Offer = '/offer/:id',
+}
+
+const enum FetchStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Failed = 'Failed'
+}
 
 const OfferKind = {
   PrivateRoom:'private room',
@@ -76,5 +93,7 @@ export {
   SORTING_METHODS,
   sortOffers,
   DEFAULT_SORTING,
-  TIMEOUT_SHOW_ERROR
+  TIMEOUT_SHOW_ERROR,
+  NameSpace,
+  FetchStatus
 };

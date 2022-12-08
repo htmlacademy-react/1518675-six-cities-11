@@ -1,24 +1,42 @@
 import CityList from '../../components/city-list/city-list';
-import {OfferType} from '../../types/offer-type';
 import CityTabs from '../../components/city-tabs/city-tabs';
 import Map from '../../components/map/map';
 import Sorting from '../../components/sorting/sorting';
 import {useAppSelector} from '../../hooks';
 import {useState} from 'react';
 import {sortOffers} from '../../const';
+import {
+  getActiveCity,
+  getActiveSorting,
+  getOffers,
+  getOffersStatus
+} from '../../store/offers/selectors';
+import {getAuthCheckedStatus} from '../../store/authorization/selectors';
+import Preloader from '../../components/preloader/preloader';
+import ErrorMessage from '../../components/error-message/error-message';
+import {getCommentsStatus, getSendingCommentStatus} from '../../store/comments/selectors';
 
-type MainProps = {
-  offers: OfferType[];
-};
-
-function Main({offers}: MainProps): JSX.Element {
-  const activeCity = useAppSelector((state) => state.city);
-  const allOffers = useAppSelector((state) => state.offers);
-  const activeSorting = useAppSelector((state) => state.sorting);
-
+function Main(): JSX.Element {
   const [activeId, setActiveId] = useState<number | null>(null);
 
-  const filteredOffersByCity = allOffers.filter((item) => item.city.name === activeCity);
+  const offers = useAppSelector(getOffers);
+  const activeCity = useAppSelector(getActiveCity);
+  const activeSorting = useAppSelector(getActiveSorting);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const offersStatus = useAppSelector(getOffersStatus);
+
+  if (!isAuthChecked || offersStatus.isLoading) {
+    return (
+      <Preloader/>
+    );
+  }
+
+  if (offersStatus.isError) {
+    return (
+      <ErrorMessage/>);
+  }
+
+  const filteredOffersByCity = offers.filter((item) => item.city.name === activeCity);
   const filteredOffersAmount = filteredOffersByCity.length;
   const sortedOffers = sortOffers(filteredOffersByCity, activeSorting);
 

@@ -1,39 +1,27 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Layout from '../layout/layout';
 import Login from '../../pages/login/login';
-import {AuthorizationStatus, Url} from '../../const';
+import {Url} from '../../const';
 import PrivateRoute from '../private-route/private-route';
-import {OfferType} from '../../types/offer-type';
 import {useAppSelector} from '../../hooks';
-import Preloader from '../preloader/preloader';
-import NoData from '../no-data/no-data';
+import {getAuthorizationStatus} from '../../store/authorization/selectors';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
-type AppTypes = {
-  offers: OfferType[];
-}
-
-function App ({offers}: AppTypes) {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isLoading = useAppSelector((state) => state.isLoading);
-  const dataStatus = useAppSelector((state) => state.noData);
-
-  if (authorizationStatus === AuthorizationStatus.Unknown || isLoading) {
-    return (
-      <Preloader/>
-    );
-  }
+function App() {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path='/' element={dataStatus ? <NoData/> : <Layout/>}>
+        <Route path='/' element={<Layout/>}>
           <Route
             index
-            element={<Main offers={offers}/>}
+            element={<Main/>}
           />
           <Route
             path={Url.Favorites}
@@ -41,9 +29,7 @@ function App ({offers}: AppTypes) {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <Favorites
-                  offers={offers}
-                />
+                <Favorites/>
               </PrivateRoute>
             }
           />
@@ -56,9 +42,9 @@ function App ({offers}: AppTypes) {
           path={Url.Login}
           element={<Login/>}
         />
-        <Route path='*' element={<NotFoundPage/>} />
+        <Route path='*' element={<NotFoundPage/>}/>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

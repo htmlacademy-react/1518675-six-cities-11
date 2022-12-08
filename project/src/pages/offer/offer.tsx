@@ -1,7 +1,5 @@
 import ReviewForm from '../../components/review-form/review-form';
 import {useParams} from 'react-router-dom';
-import {offers} from '../../mocks/data';
-import {comments} from '../../mocks/data';
 import {calculateWidthRating, capitalizeFirstLetter} from '../../utils';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -9,21 +7,56 @@ import CityCard from '../../components/city-card/city-card';
 import CityNearbyList from '../../components/city-nearby-list/city-nearby-list';
 import Gallery from '../../components/gallery/gallery';
 import {MAX_NEARBY_OBJECTS} from '../../const';
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getOffer, getSingleOfferStatus} from '../../store/single-offer/selectors';
+import Preloader from '../../components/preloader/preloader';
+import ErrorMessage from '../../components/error-message/error-message';
+import {fetchCommentsAction, fetchNearbyOffersAction, fetchSingleOfferAction} from '../../store/api-actions';
+import {getComments, getSendingCommentStatus} from '../../store/comments/selectors';
+import {getNearbyOffers, getNearbyOffersStatus} from '../../store/nearby-offers/selectors';
 
 function Offer(): JSX.Element {
+  const offerStatus = useAppSelector(getSingleOfferStatus);
+  const nearbyOffersStatus = useAppSelector(getNearbyOffersStatus);
 
-  const offerId = Number(useParams().id);
-  const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description} = offers[offerId - 1];
+  const dispatch = useAppDispatch();
+  const offerId = useParams().id;
 
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchSingleOfferAction(offerId));
+      dispatch(fetchCommentsAction(offerId));
+      dispatch(fetchNearbyOffersAction(offerId));
+    }
+  }, [offerId, dispatch]);
+
+  const singleOffer = useAppSelector(getOffer);
+  const offerComments = useAppSelector(getComments);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+
+  if (offerStatus.isError) {
+    return (
+      <ErrorMessage/>
+    );
+  }
+
+  if (offerStatus.isLoading || nearbyOffersStatus.isLoading || singleOffer === null) {
+    return (
+      <Preloader/>
+    );
+  }
+
+
+
+  const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description} = singleOffer;
   const ratingWidth = calculateWidthRating(rating);
 
   return (
     <div className="page">
       <main className="page__main page__main--property">
         <section className="property">
-
           <Gallery images={images} />
-
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
@@ -65,7 +98,6 @@ function Offer(): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-
                   {
                     goods.map((item) => (
                       <li className="property__inside-item" key={item}>
@@ -73,7 +105,6 @@ function Offer(): JSX.Element {
                       </li>
                     ))
                   }
-
                 </ul>
               </div>
               <div className="property__host">
@@ -96,30 +127,23 @@ function Offer(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-
-                <ReviewList comments={comments} />
-
-                <ReviewForm />
-
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerComments.length}</span></h2>
+                <ReviewList comments={offerComments}/>
+                <ReviewForm/>
               </section>
             </div>
           </div>
-
-          <Map className="property__map" offers={offers.slice(0, MAX_NEARBY_OBJECTS)} />
-
+          <Map className="property__map" offers={nearbyOffers.slice(0, MAX_NEARBY_OBJECTS)} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CityNearbyList>
-
               {
-                offers.slice(0, MAX_NEARBY_OBJECTS).map((item) => (
+                nearbyOffers.map((item) => (
                   <CityCard offer={item} cardType={'nearby'} key={item.id}/>
                 ))
               }
-
             </CityNearbyList>
           </section>
         </div>

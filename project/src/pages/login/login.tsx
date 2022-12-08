@@ -1,11 +1,12 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/data-type';
 import {Url} from '../../const';
 import cn from 'classnames';
 import s from './login.module.scss';
+import {redirectToRoute} from '../../store/action';
 
 const formFields = {
   email: 'E-mail',
@@ -40,12 +41,10 @@ function Login() {
   });
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
-    console.log('workSubmit');
     dispatch(loginAction(authData));
-    navigate(Url.Main);
+    dispatch(redirectToRoute(Url.Main));
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -60,15 +59,14 @@ function Login() {
   const handleChange = ({target}: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = target;
     const rule = formState[name].regExp;
-    const isCorrectValue = rule.exec(value);
+    const isValid = rule.test(value);
 
     setFormState({
       ...formState,
       [name]: {
-        value: value,
-        error: (isCorrectValue === null),
-        errorText: `Неправильно введён ${name}`,
-        regExp: rule
+        ...formState[name],
+        value,
+        error: !isValid
       }
     });
   };
@@ -108,7 +106,7 @@ function Login() {
                   });
 
                   return (
-                    <div style={{position: 'relative'}} className="login__input-wrapper form__input-wrapper" key={key}>
+                    <div className={`login__input-wrapper form__input-wrapper ${s.inputWrapper}`} key={key}>
                       <label className="visually-hidden">{value}</label>
                       <input
                         className={inputClasses}
@@ -120,15 +118,14 @@ function Login() {
                         onChange={handleChange}
                       />
                       {
-                        formState[key].error && <span style={{display: 'block', position: 'absolute', bottom: '0', fontSize: '13px', color: 'darkred'}}>{formState[key].errorText}</span>
+                        formState[key].error && <span className={s.errorText}>{formState[key].errorText}</span>
                       }
                     </div>
                   );
                 })
               }
               <button
-                style={{marginTop: '20px'}}
-                className="login__submit form__submit button"
+                className={`login__submit form__submit button ${s.buttonDecoration}`}
                 type="submit"
               >
                 Sign in

@@ -1,12 +1,32 @@
 .error {
   position: fixed;
-  top: 2%;
-  left: 2%;
-  z-index: 500;
-  padding: 12px 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+
+  h1 {
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
+.button {
   background-color: #d96666;
-  color: white;
-  border-radius: 5px;
-  text-align: center;
-  font-size: 16px;
+  padding: 12px 100px;
+  border: 0;
+  width: 100%;
+  font-family: inherit;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 6px;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:active {
+    opacity: 1;
+  }
 }

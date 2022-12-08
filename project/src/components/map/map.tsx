@@ -11,7 +11,6 @@ type MapProps = {
 }
 
 function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
-
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0].city);
 
@@ -32,8 +31,8 @@ function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
       offers.forEach((point) => {
         leaflet
           .marker({
-            lat: point.city.location?.latitude,
-            lng: point.city.location?.longitude,
+            lat: point.location?.latitude,
+            lng: point.location?.longitude,
           }, {
             icon: (point.id === selectedCard)
               ? currentCustomIcon
@@ -50,7 +49,6 @@ function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
       id='map'
       className={`${className} map`}
     >
-
     </section>
   );
 }

@@ -1,0 +1,70 @@
+.caption {
+  display: none;
+}
+
+.disabled {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.wrapperButton {
+  position: relative;
+  z-index: 2;
+}
+
+.preloaded {
+  opacity: 0.8;
+  position: relative;
+  pointer-events: none;
+
+  .caption {
+    display: inline;
+  }
+
+  .wrapperButton {
+    animation: pulsing-button 1s linear infinite;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 3px;
+    width: 1%;
+    height: 100%;
+    background: #e74c3c;
+    z-index: 1;
+    animation: preloader-button 3s linear infinite;
+  }
+}
+
+@keyframes preloader-button {
+  0% {
+    width: 1%;
+    background: transparent;
+  }
+  10% {
+    background: #e74c3c;
+  }
+  90% {
+    background: #e74c3c;
+  }
+  100% {
+    width: 100%;
+    background: transparent;
+  }
+}
+
+@keyframes pulsing-button {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

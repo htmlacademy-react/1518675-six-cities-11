@@ -2,7 +2,7 @@ import {useRef, useState} from 'react';
 import cn from 'classnames';
 import s from './sorting.module.scss';
 import {SORTING_METHODS} from '../../const';
-import {changeSorting} from '../../store/action';
+import {changeSorting} from '../../store/offers/offers';
 import {useAppDispatch} from '../../hooks';
 import {useClickAway} from 'react-use';
 
