@@ -14,7 +14,7 @@ type Offers = {
 const initialState: Offers = {
   offers: [],
   offersStatus: FetchStatus.Idle,
-  city: 'Amsterdam',
+  city: 'Cologne',
   sorting: DEFAULT_SORTING,
   noData: false
 };

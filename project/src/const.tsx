@@ -11,6 +11,7 @@ const enum NameSpace {
   Offer = 'OFFER',
   User = 'USER',
   Comments = 'COMMENTS',
+  Favorites = 'FAVORITES',
   NearbyOffers = 'NEARBY_OFFERS',
   Notifications = 'NOTIFICATIONS'
 }
@@ -81,6 +82,10 @@ const DEFAULT_SORTING = 'Popular';
 
 const TIMEOUT_SHOW_ERROR = 2000;
 
+const MIN_REVIEW_LENGTH = 50;
+
+const MAX_REVIEW_LENGTH = 300;
+
 export {
   AuthorizationStatus,
   Url,
@@ -95,5 +100,7 @@ export {
   DEFAULT_SORTING,
   TIMEOUT_SHOW_ERROR,
   NameSpace,
-  FetchStatus
+  FetchStatus,
+  MIN_REVIEW_LENGTH,
+  MAX_REVIEW_LENGTH
 };

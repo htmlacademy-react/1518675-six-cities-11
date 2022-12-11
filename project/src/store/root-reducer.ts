@@ -6,6 +6,7 @@ import {singleOffer} from './single-offer/single-offer';
 import {comments} from './comments/comments';
 import {nearbyOffers} from './nearby-offers/nearby-offers';
 import {notifications} from './notifications/notifications';
+import {favorites} from './favorites/favorites';
 
 export const rootReducer = combineReducers({
   [NameSpace.Data]: offers.reducer,
@@ -13,5 +14,6 @@ export const rootReducer = combineReducers({
   [NameSpace.Offer]: singleOffer.reducer,
   [NameSpace.Comments]: comments.reducer,
   [NameSpace.NearbyOffers]: nearbyOffers.reducer,
-  [NameSpace.Notifications]: notifications.reducer
+  [NameSpace.Notifications]: notifications.reducer,
+  [NameSpace.Favorites]: favorites.reducer
 });

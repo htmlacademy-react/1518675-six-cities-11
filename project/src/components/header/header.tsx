@@ -2,12 +2,20 @@ import Logo from '../logo/logo';
 import {AuthorizationStatus, Url} from '../../const';
 import {Link} from 'react-router-dom';
 import {dropToken} from '../../services/token';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getUserEmail} from '../../store/authorization/selectors';
+import {redirectToRoute} from '../../store/action';
+import {getFavorites} from '../../store/favorites/selectors';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
 function Header({authorizationStatus}: HeaderProps): JSX.Element {
+  const email = useAppSelector(getUserEmail);
+  const dispatch = useAppDispatch();
+
+  const favorites = useAppSelector(getFavorites);
 
   return (
     <header className="header">
@@ -28,8 +36,15 @@ function Header({authorizationStatus}: HeaderProps): JSX.Element {
                       <a className="header__nav-link header__nav-link--profile" href="#">
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                        <span className="header__favorite-count">3</span>
+                        <span className="header__user-name user__name">{email}</span>
+                        <span
+                          className="header__favorite-count"
+                          onClick={() => dispatch(redirectToRoute(Url.Favorites))}
+                        >
+                          {
+                            favorites && favorites.length
+                          }
+                        </span>
                       </a>
                     </li>
                     <li className="header__nav-item">

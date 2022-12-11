@@ -6,14 +6,14 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Layout from '../layout/layout';
 import Login from '../../pages/login/login';
 import {Url} from '../../const';
-import PrivateRoute from '../private-route/private-route';
+// import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../../hooks';
 import {getAuthorizationStatus} from '../../store/authorization/selectors';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App() {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  // const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -26,11 +26,11 @@ function App() {
           <Route
             path={Url.Favorites}
             element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                <Favorites/>
-              </PrivateRoute>
+              // <PrivateRoute
+              //   authorizationStatus={authorizationStatus}
+              // >
+              <Favorites/>
+              // </PrivateRoute>
             }
           />
           <Route

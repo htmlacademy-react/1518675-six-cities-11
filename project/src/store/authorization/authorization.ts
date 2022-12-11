@@ -4,10 +4,12 @@ import {checkAuthAction, loginAction, logoutAction} from '../api-actions';
 
 type AuthorizationType = {
   authorizationStatus: AuthorizationStatus;
+  email: string;
 };
 
 const initialState: AuthorizationType = {
   authorizationStatus: AuthorizationStatus.Unknown,
+  email: ''
 };
 
 export const authorization = createSlice({
@@ -22,7 +24,8 @@ export const authorization = createSlice({
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
-      .addCase(loginAction.fulfilled, (state) => {
+      .addCase(loginAction.fulfilled, (state, action) => {
+        state.email = action.payload;
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(loginAction.rejected, (state) => {
