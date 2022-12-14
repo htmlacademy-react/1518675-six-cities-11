@@ -7,13 +7,11 @@ type ReviewListProps = {
 }
 
 function ReviewList({comments}: ReviewListProps): JSX.Element {
-  const sortingComments = comments.slice().sort((a: CommentType, b: CommentType): number => {
-    if (moment(a.date).isBefore(b.date)) {
-      return 1;
-    }
 
-    return -1;
-  }).slice(0, 10);
+  const sortingComments = comments
+    .slice()
+    .sort((a: CommentType, b: CommentType) => moment(a.date).diff(b.date))
+    .slice(0, 10);
 
   return (
     <ul className="reviews__list">
