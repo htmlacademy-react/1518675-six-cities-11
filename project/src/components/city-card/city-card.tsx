@@ -69,7 +69,9 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            onClick={() => dispatch(changeFavoriteAction(offer))}
+            onClick={() => {
+              dispatch(changeFavoriteAction(offer));
+            }}
             className={favoritesClasses}
             type="button"
           >
