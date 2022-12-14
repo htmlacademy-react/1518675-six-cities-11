@@ -79,7 +79,9 @@ function Offer(): JSX.Element {
                   {capitalizeFirstLetter(title)}
                 </h1>
                 <button
-                  onClick={() => dispatch(changeFavoriteAction(singleOffer))}
+                  onClick={() => {
+                    dispatch(changeFavoriteAction(singleOffer));
+                  }}
                   className="property__bookmark-button property__bookmark-button--active button"
                   type="button"
                 >
