@@ -7,7 +7,6 @@ type ReviewListProps = {
 }
 
 function ReviewList({comments}: ReviewListProps): JSX.Element {
-
   const sortingComments = comments
     .slice()
     .sort((a: CommentType, b: CommentType) => moment(a.date).diff(b.date))
