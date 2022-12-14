@@ -12,9 +12,16 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getOffer, getSingleOfferStatus} from '../../store/single-offer/selectors';
 import Preloader from '../../components/preloader/preloader';
 import ErrorMessage from '../../components/error-message/error-message';
-import {fetchCommentsAction, fetchNearbyOffersAction, fetchSingleOfferAction} from '../../store/api-actions';
-import {getComments, getSendingCommentStatus} from '../../store/comments/selectors';
+import {
+  changeFavoriteAction,
+  fetchCommentsAction,
+  fetchNearbyOffersAction,
+  fetchSingleOfferAction
+} from '../../store/api-actions';
+import {getComments} from '../../store/comments/selectors';
 import {getNearbyOffers, getNearbyOffersStatus} from '../../store/nearby-offers/selectors';
+import s from './offer.module.scss';
+import cn from 'classnames';
 
 function Offer(): JSX.Element {
   const offerStatus = useAppSelector(getSingleOfferStatus);
@@ -47,10 +54,12 @@ function Offer(): JSX.Element {
     );
   }
 
-
-
-  const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description} = singleOffer;
+  const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description, isPremium, isFavorite} = singleOffer;
   const ratingWidth = calculateWidthRating(rating);
+
+  const svgClasses = cn('property__bookmark-icon', {
+    [s.favoriteActive]: isFavorite
+  });
 
   return (
     <div className="page">
@@ -59,15 +68,22 @@ function Offer(): JSX.Element {
           <Gallery images={images} />
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {
+                isPremium &&
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+              }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {capitalizeFirstLetter(title)}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                <button
+                  onClick={() => dispatch(changeFavoriteAction(singleOffer))}
+                  className="property__bookmark-button property__bookmark-button--active button"
+                  type="button"
+                >
+                  <svg className={svgClasses} width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -116,9 +132,9 @@ function Offer(): JSX.Element {
                   <span className="property__user-name">
                     {host.name}
                   </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
+                  {
+                    host.isPro && <span className="property__user-status">Pro</span>
+                  }
                 </div>
                 <div className="property__description">
                   <p className="property__text">

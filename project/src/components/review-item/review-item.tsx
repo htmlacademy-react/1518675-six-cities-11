@@ -1,10 +1,12 @@
 import {CommentType} from '../../types/comment-type';
+import Moment from 'react-moment';
 
 type ReviewItemProps = {
   review: CommentType;
 }
 
 function ReviewItem({review}: ReviewItemProps): JSX.Element {
+  const {date, rating} = review;
   const {avatarUrl, name} = review.user;
 
   return (
@@ -18,14 +20,18 @@ function ReviewItem({review}: ReviewItemProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${rating * 2}0%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={date}>
+          <Moment format="MMMM YYYY">
+            {date}
+          </Moment>
+        </time>
       </div>
     </li>
   );

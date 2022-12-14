@@ -4,9 +4,9 @@ import {newCommentAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useParams} from 'react-router-dom';
 import {getSendingCommentStatus} from '../../store/comments/selectors';
-import {CommentType} from '../../types/comment-type';
 import cn from 'classnames';
 import s from './review-form.module.scss';
+import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from '../../const';
 
 const typesRating = {
   5: 'perfect',
@@ -17,47 +17,38 @@ const typesRating = {
 };
 
 function ReviewForm () {
-  const sendingCommentStatus = useAppSelector(getSendingCommentStatus);
+  const {isSuccess, isLoading} = useAppSelector(getSendingCommentStatus);
+  const dispatch = useAppDispatch();
+  const currentId = useParams().id;
 
   const [text, setText] = useState('');
   const [currentRating, setCurrentRating] = useState(0);
 
   useEffect(() => {
-    setText('');
-    setCurrentRating(0);
-  }, [sendingCommentStatus.isSuccess]);
-
-  const currentId = useParams().id;
-  const dispatch = useAppDispatch();
-
-  const validateCommentForm = (comment: string, rating: number) => {
-    if (comment.length > 50 && comment.length < 300 && rating) {
-      return true;
+    if (isSuccess) {
+      setText('');
+      setCurrentRating(0);
     }
-    return false;
-  };
+  }, [isSuccess]);
+
+  const isFormValid = text.length > MIN_REVIEW_LENGTH && text.length < MAX_REVIEW_LENGTH && currentRating;
 
   const handleRatingChange = (ratingNumber: number) => {
     setCurrentRating(ratingNumber);
   };
 
-  const onSubmit = (comment: CommentType) => {
-    dispatch(newCommentAction(comment));
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(newCommentAction({
       comment: text,
       rating: currentRating,
-      id: currentId
-    });
+      id: Number(currentId)
+    }));
   };
 
   const submitButtonClasses = cn('reviews__submit form__submit button', {
-    [s.disabled]: !validateCommentForm(text, currentRating),
-    [s.preloaded]: sendingCommentStatus.isLoading
+    [s.preloaded]: isLoading
   });
 
   return (
@@ -75,7 +66,9 @@ function ReviewForm () {
               label={value}
               count={key}
               key={key}
+              currentRating={currentRating}
               onRatingChange={handleRatingChange}
+              disabled={isLoading}
             />
           ))
         }
@@ -87,6 +80,7 @@ function ReviewForm () {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={isLoading}
       >
         {text}
       </textarea>
@@ -100,9 +94,11 @@ function ReviewForm () {
         <button
           className={submitButtonClasses}
           type="submit"
-          tabIndex="-1"
+          disabled={!isFormValid || isLoading}
         >
-          <span className={s.wrapperButton}>Submit<span className={s.caption}>ting..</span></span>
+          <span className={s.wrapperButton}>
+            {isLoading ? 'Submitting' : 'Submit'}
+          </span>
         </button>
       </div>
     </form>

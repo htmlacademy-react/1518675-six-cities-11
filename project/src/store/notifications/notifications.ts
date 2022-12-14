@@ -1,6 +1,7 @@
 import {Notification} from '../../types/notification';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
+import {nanoid} from 'nanoid';
 
 type NotificationType = {
   notifications: Notification[];
@@ -15,7 +16,7 @@ export const notifications = createSlice ({
   initialState,
   reducers: {
     pushNotification: (state, action: PayloadAction<Omit<Notification, 'id'>>) => {
-      const id = Date.now();
+      const id = nanoid();
       state.notifications.push({id, ...action.payload});
     },
     clearNotification: (state, action: PayloadAction<string>) => {

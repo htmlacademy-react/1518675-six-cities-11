@@ -11,6 +11,7 @@ const enum NameSpace {
   Offer = 'OFFER',
   User = 'USER',
   Comments = 'COMMENTS',
+  Favorites = 'FAVORITES',
   NearbyOffers = 'NEARBY_OFFERS',
   Notifications = 'NOTIFICATIONS'
 }
@@ -50,7 +51,7 @@ const CardType = {
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 const SORTING_METHODS = {
-  Popular: {
+  popular: {
     name: 'Popular',
     method: (offers: OfferType[]) => offers
   },
@@ -77,9 +78,15 @@ const MAX_NEARBY_OBJECTS = 3;
 
 const MAX_OFFER_IMAGES = 6;
 
-const DEFAULT_SORTING = 'Popular';
+const SORTING_VALUES = Object.keys(SORTING_METHODS);
+
+const DEFAULT_SORTING = SORTING_VALUES[0];
 
 const TIMEOUT_SHOW_ERROR = 2000;
+
+const MIN_REVIEW_LENGTH = 50;
+
+const MAX_REVIEW_LENGTH = 300;
 
 export {
   AuthorizationStatus,
@@ -95,5 +102,7 @@ export {
   DEFAULT_SORTING,
   TIMEOUT_SHOW_ERROR,
   NameSpace,
-  FetchStatus
+  FetchStatus,
+  MIN_REVIEW_LENGTH,
+  MAX_REVIEW_LENGTH
 };

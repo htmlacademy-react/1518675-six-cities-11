@@ -2,6 +2,11 @@ import {generatePath, Link} from 'react-router-dom';
 import {OfferType} from '../../types/offer-type';
 import {Url} from '../../const';
 import {capitalizeFirstLetter, calculateWidthRating} from '../../utils';
+import {
+  changeFavoriteAction
+} from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks';
+import cn from 'classnames';
 
 type CityCardType = {
   offer: OfferType;
@@ -28,13 +33,17 @@ const classesForCards = {
 };
 
 function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const {article, imageWrapper, info} = classesForCards[cardType];
-  const {previewImage, price, id, title, type, rating} = offer;
+  const {previewImage, price, id, title, type, rating, isPremium, isFavorite} = offer;
 
   const ratingWidth = calculateWidthRating(rating);
-
   const generatedUrl = generatePath(Url.Offer, {id: `${id}`});
+
+  const favoritesClasses = cn('place-card__bookmark-button button', {
+    'place-card__bookmark-button--active': isFavorite
+  });
 
   return (
     <article
@@ -42,9 +51,12 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
       onMouseOver={() => onMouseAction ? onMouseAction(id) : null}
       onMouseLeave={() => onMouseAction ? onMouseAction(null) : null}
     >
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+      {
+        isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className={imageWrapper}>
         <Link to={generatedUrl} title={generatedUrl}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title}/>
@@ -56,7 +68,11 @@ function CityCard({offer, cardType, onMouseAction}: CityCardType): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            onClick={() => dispatch(changeFavoriteAction(offer))}
+            className={favoritesClasses}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

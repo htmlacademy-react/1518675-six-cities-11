@@ -14,7 +14,6 @@ import {
 import {getAuthCheckedStatus} from '../../store/authorization/selectors';
 import Preloader from '../../components/preloader/preloader';
 import ErrorMessage from '../../components/error-message/error-message';
-import {getCommentsStatus, getSendingCommentStatus} from '../../store/comments/selectors';
 
 function Main(): JSX.Element {
   const [activeId, setActiveId] = useState<number | null>(null);
@@ -63,7 +62,7 @@ function Main(): JSX.Element {
             <div className="cities__right-section">
               <Map
                 className="cities__map"
-                offers={offers}
+                offers={sortedOffers}
                 selectedCard={activeId}
               />
             </div>

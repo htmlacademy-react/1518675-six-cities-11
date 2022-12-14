@@ -33,7 +33,7 @@ function Notification(): JSX.Element {
           return null;
       }
     });
-  }
+  };
 
   return <>{renderNotification()}</>;
 }
