@@ -7,8 +7,7 @@ import Layout from '../layout/layout';
 import Login from '../../pages/login/login';
 import {Url} from '../../const';
 // import PrivateRoute from '../private-route/private-route';
-import {useAppSelector} from '../../hooks';
-import {getAuthorizationStatus} from '../../store/authorization/selectors';
+// import {getAuthorizationStatus} from '../../store/authorization/selectors';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 

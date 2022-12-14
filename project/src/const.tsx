@@ -51,7 +51,7 @@ const CardType = {
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 const SORTING_METHODS = {
-  Popular: {
+  popular: {
     name: 'Popular',
     method: (offers: OfferType[]) => offers
   },
@@ -78,7 +78,9 @@ const MAX_NEARBY_OBJECTS = 3;
 
 const MAX_OFFER_IMAGES = 6;
 
-const DEFAULT_SORTING = 'Popular';
+const SORTING_VALUES = Object.keys(SORTING_METHODS);
+
+const DEFAULT_SORTING = SORTING_VALUES[0];
 
 const TIMEOUT_SHOW_ERROR = 2000;
 

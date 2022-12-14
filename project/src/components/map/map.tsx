@@ -1,4 +1,4 @@
-import leaflet from 'leaflet';
+import leaflet, {LayerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {OfferType} from '../../types/offer-type';
 import {useEffect, useRef} from 'react';
@@ -13,6 +13,7 @@ type MapProps = {
 function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0].city);
+  const city = offers[0].city;
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -27,6 +28,7 @@ function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
   });
 
   useEffect(() => {
+    const layerGroup = new LayerGroup();
     if (map && offers) {
       offers.forEach((point) => {
         leaflet
@@ -38,10 +40,22 @@ function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
               ? currentCustomIcon
               : defaultCustomIcon,
           })
-          .addTo(map);
+          .addTo(layerGroup);
       });
+
+      layerGroup.addTo(map);
     }
+
+    return () => {
+      layerGroup.clearLayers();
+    };
+
   }, [map, offers, selectedCard]);
+
+  useEffect(() => {
+    const {location} = city;
+    map?.setView({lat: location.latitude, lng: location.longitude});
+  }, [map, city]);
 
   return (
     <section

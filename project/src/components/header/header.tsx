@@ -1,11 +1,10 @@
 import Logo from '../logo/logo';
 import {AuthorizationStatus, Url} from '../../const';
 import {Link} from 'react-router-dom';
-import {dropToken} from '../../services/token';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getUserEmail} from '../../store/authorization/selectors';
-import {redirectToRoute} from '../../store/action';
 import {getFavorites} from '../../store/favorites/selectors';
+import {logoutAction} from '../../store/api-actions';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;
@@ -33,25 +32,22 @@ function Header({authorizationStatus}: HeaderProps): JSX.Element {
                   ?
                   <>
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
+                      <Link to={Url.Favorites} className="header__nav-link header__nav-link--profile">
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
                         <span className="header__user-name user__name">{email}</span>
                         <span
                           className="header__favorite-count"
-                          onClick={() => dispatch(redirectToRoute(Url.Favorites))}
                         >
-                          {
-                            favorites && favorites.length
-                          }
+                          {favorites?.length || 0}
                         </span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="header__nav-item">
                       <Link
                         to={Url.Login}
                         className="header__nav-link"
-                        onClick={() => dropToken()}
+                        onClick={() => dispatch(logoutAction)}
                       >
                         <span className="header__signout">Sign out</span>
                       </Link>

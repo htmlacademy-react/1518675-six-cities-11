@@ -2,7 +2,9 @@ import {generatePath, Link} from 'react-router-dom';
 import {OfferType} from '../../types/offer-type';
 import {Url} from '../../const';
 import {capitalizeFirstLetter, calculateWidthRating} from '../../utils';
-import {changeFavoriteAction} from '../../store/api-actions';
+import {
+  changeFavoriteAction
+} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks';
 import cn from 'classnames';
 

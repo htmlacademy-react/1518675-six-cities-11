@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {FetchStatus, NameSpace} from '../../const';
-import {fetchSingleOfferAction} from '../api-actions';
+import {changeFavoriteAction, fetchSingleOfferAction} from '../api-actions';
 import {OfferType} from '../../types/offer-type';
 
 type SingleOfferType = {
@@ -28,6 +28,11 @@ export const singleOffer = createSlice({
       })
       .addCase(fetchSingleOfferAction.rejected, (state) => {
         state.offerStatus = FetchStatus.Failed;
+      })
+      .addCase(changeFavoriteAction.fulfilled, (state, action) => {
+        if (state.offer) {
+          state.offer.isFavorite = action.payload.isFavorite;
+        }
       });
   }
 });

@@ -62,7 +62,7 @@ function Main(): JSX.Element {
             <div className="cities__right-section">
               <Map
                 className="cities__map"
-                offers={offers}
+                offers={sortedOffers}
                 selectedCard={activeId}
               />
             </div>

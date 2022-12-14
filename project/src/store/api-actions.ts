@@ -38,14 +38,15 @@ export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<string, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
-    await api.get(APIRoute.Login);
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    return data.email;
   }
 );
 
@@ -55,7 +56,7 @@ export const fetchSingleOfferAction = createAsyncThunk<OfferType, string, {
   extra: AxiosInstance;
 }>(
   'fetchSingleOffer',
-  async (id, {dispatch, extra: api}) => {
+  async (id, {extra: api}) => {
     const {data} = await api.get<OfferType>(`/hotels/${id}`);
     return data;
   },
@@ -86,7 +87,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'logout',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, {extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
   }
@@ -110,7 +111,7 @@ export const fetchNearbyOffersAction = createAsyncThunk<OfferType[], string, {
   extra: AxiosInstance;
 }>(
   'fetchNearbyOffers',
-  async (id, {dispatch, extra: api}) => {
+  async (id, {extra: api}) => {
     const {data} = await api.get<OfferType[]>(`/hotels/${id}/nearby`);
     return data;
   },
@@ -150,7 +151,6 @@ export const fetchFavoritesAction = createAsyncThunk<OfferType[], undefined, {
   },
 );
 
-
 export const changeFavoriteAction = createAsyncThunk<OfferType, OfferType, {
   dispatch: AppDispatch;
   state: State;
@@ -158,8 +158,13 @@ export const changeFavoriteAction = createAsyncThunk<OfferType, OfferType, {
 }>(
   'changeFavoriteAction',
   async ({id, isFavorite}, {dispatch, extra: api}) => {
-    const url = isFavorite ? '0' : '1';
-    const {data} = await api.post<OfferType>(`/favorite/${id}/${url}`);
-    return data;
+    try {
+      const url = Number(!isFavorite);
+      const {data} = await api.post<OfferType>(`/favorite/${id}/${url}`);
+      return data;
+    } catch (err) {
+      dispatch(pushNotification({type: 'error', message: 'Error change favorite status'}));
+      throw err;
+    }
   },
 );

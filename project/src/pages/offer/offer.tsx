@@ -20,6 +20,8 @@ import {
 } from '../../store/api-actions';
 import {getComments} from '../../store/comments/selectors';
 import {getNearbyOffers, getNearbyOffersStatus} from '../../store/nearby-offers/selectors';
+import s from './offer.module.scss';
+import cn from 'classnames';
 
 function Offer(): JSX.Element {
   const offerStatus = useAppSelector(getSingleOfferStatus);
@@ -55,6 +57,10 @@ function Offer(): JSX.Element {
   const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description, isPremium, isFavorite} = singleOffer;
   const ratingWidth = calculateWidthRating(rating);
 
+  const svgClasses = cn('property__bookmark-icon', {
+    [s.favoriteActive]: isFavorite
+  });
+
   return (
     <div className="page">
       <main className="page__main page__main--property">
@@ -72,26 +78,14 @@ function Offer(): JSX.Element {
                 <h1 className="property__name">
                   {capitalizeFirstLetter(title)}
                 </h1>
-
-                {/*<button className="place-card__bookmark-button place-card__bookmark-button--active button"*/}
-                {/*        type="button">*/}
-                {/*  <svg className="place-card__bookmark-icon" width="18" height="19">*/}
-                {/*    <use xlink:href="#icon-bookmark"></use>*/}
-                {/*  </svg>*/}
-                {/*  <span className="visually-hidden">In bookmarks</span>*/}
-                {/*</button>*/}
-
                 <button
                   onClick={() => dispatch(changeFavoriteAction(singleOffer))}
                   className="property__bookmark-button property__bookmark-button--active button"
                   type="button"
                 >
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                  <svg className={svgClasses} width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  {
-                    isFavorite && 'In favorites'
-                  }
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>

@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {DEFAULT_SORTING, FetchStatus, NameSpace} from '../../const';
+import {CITIES, DEFAULT_SORTING, FetchStatus, NameSpace} from '../../const';
 import {fetchOffersAction} from '../api-actions';
 import {OfferType} from '../../types/offer-type';
 
@@ -14,21 +14,29 @@ type Offers = {
 const initialState: Offers = {
   offers: [],
   offersStatus: FetchStatus.Idle,
-  city: 'Cologne',
+  city: CITIES[0],
   sorting: DEFAULT_SORTING,
   noData: false
 };
+
+type SortingType = {
+  sorting: string;
+};
+
+type CityType = {
+  city: string;
+}
 
 export const offers = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
     changeSorting: (state, action) => {
-      const {sorting} = action.payload;
+      const {sorting}: SortingType = action.payload;
       state.sorting = sorting;
     },
     changeCity: (state, action) => {
-      const {city} = action.payload;
+      const {city}: CityType = action.payload;
       state.city = city;
     }
   },
@@ -42,7 +50,6 @@ export const offers = createSlice({
         state.offersStatus = FetchStatus.Success;
       })
       .addCase(fetchOffersAction.rejected, (state) => {
-        state.offers = [];
         state.offersStatus = FetchStatus.Failed;
         state.noData = true;
       });
