@@ -31,7 +31,9 @@ function Sorting({activeSorting}: SortingProps) {
         className={s.placesSortingType}
         onClick={() => setOpen(!open)}
       >
-        Popular
+        {
+          SORTING_METHODS[activeSorting as keyof typeof SORTING_METHODS].name
+        }
         <svg className={s.placesSortingArrow} width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>

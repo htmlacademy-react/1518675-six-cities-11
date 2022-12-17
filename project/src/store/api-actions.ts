@@ -123,7 +123,7 @@ export const newCommentAction = createAsyncThunk<CommentType[], CommentPayload, 
   extra: AxiosInstance;
 }>(
   'newComment',
-  async ({comment: comment, rating, id}, {dispatch, extra: api}) => {
+  async ({comment, rating, id}, {dispatch, extra: api}) => {
     try {
       const {data} = await api.post<CommentType[]>(`/comments/${id}`, {comment, rating});
       return data;

@@ -22,6 +22,7 @@ import {getComments} from '../../store/comments/selectors';
 import {getNearbyOffers, getNearbyOffersStatus} from '../../store/nearby-offers/selectors';
 import s from './offer.module.scss';
 import cn from 'classnames';
+import {OfferType} from '../../types/offer-type';
 
 function Offer(): JSX.Element {
   const offerStatus = useAppSelector(getSingleOfferStatus);
@@ -42,6 +43,9 @@ function Offer(): JSX.Element {
   const offerComments = useAppSelector(getComments);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
+  const visibleNearbyOffers = nearbyOffers.slice();
+  visibleNearbyOffers.push(singleOffer as OfferType);
+
   if (offerStatus.isError) {
     return (
       <ErrorMessage/>
@@ -54,7 +58,7 @@ function Offer(): JSX.Element {
     );
   }
 
-  const {price, rating, images, title, type, bedrooms, maxAdults, goods, host, description, isPremium, isFavorite} = singleOffer;
+  const {id, price, rating, images, title, type, bedrooms, maxAdults, goods, host, description, isPremium, isFavorite} = singleOffer;
   const ratingWidth = calculateWidthRating(rating);
 
   const svgClasses = cn('property__bookmark-icon', {
@@ -103,10 +107,10 @@ function Offer(): JSX.Element {
                   {capitalizeFirstLetter(type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {bedrooms} Bedrooms
+                  {bedrooms === 1 ? `${bedrooms} Bedroom` : `${bedrooms} Bedrooms`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
+                  {maxAdults === 1 ? `Max ${maxAdults} adult` : `Max ${maxAdults} adults`}
                 </li>
               </ul>
               <div className="property__price">
@@ -151,7 +155,11 @@ function Offer(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map className="property__map" offers={nearbyOffers.slice(0, MAX_NEARBY_OBJECTS)} />
+          <Map
+            selectedCard={id}
+            className="property__map"
+            offers={visibleNearbyOffers.slice(0, MAX_NEARBY_OBJECTS)}
+          />
         </section>
         <div className="container">
           <section className="near-places places">

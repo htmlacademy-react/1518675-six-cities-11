@@ -8,14 +8,14 @@ import Login from '../../pages/login/login';
 import {Url} from '../../const';
 // import PrivateRoute from '../private-route/private-route';
 // import {getAuthorizationStatus} from '../../store/authorization/selectors';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRoute from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App() {
   // const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRoute history={browserHistory}>
       <Routes>
         <Route path='/' element={<Layout/>}>
           <Route
@@ -43,7 +43,7 @@ function App() {
         />
         <Route path='*' element={<NotFoundPage/>}/>
       </Routes>
-    </HistoryRouter>
+    </HistoryRoute>
   );
 }
 

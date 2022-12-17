@@ -6,7 +6,7 @@ import {useParams} from 'react-router-dom';
 import {getSendingCommentStatus} from '../../store/comments/selectors';
 import cn from 'classnames';
 import s from './review-form.module.scss';
-import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from '../../const';
+import {ReviewLength} from '../../const';
 
 const typesRating = {
   5: 'perfect',
@@ -31,7 +31,7 @@ function ReviewForm () {
     }
   }, [isSuccess]);
 
-  const isFormValid = text.length > MIN_REVIEW_LENGTH && text.length < MAX_REVIEW_LENGTH && currentRating;
+  const isFormValid = text.length > ReviewLength.Min && text.length < ReviewLength.Max && currentRating;
 
   const handleRatingChange = (ratingNumber: number) => {
     setCurrentRating(ratingNumber);

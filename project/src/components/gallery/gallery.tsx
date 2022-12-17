@@ -8,7 +8,7 @@ function Gallery({images}: GalleryProps): JSX.Element {
 
   const imageItems = images.slice(0, MAX_OFFER_IMAGES).map((item) => (
     <div className="property__image-wrapper" key={item}>
-      <img className="property__image" src={item} alt="Photo studio"/>
+      <img className="property__image" src={item} alt="Studio"/>
     </div>
   ));
 
