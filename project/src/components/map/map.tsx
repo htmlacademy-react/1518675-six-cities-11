@@ -50,7 +50,7 @@ function Map ({className, offers, selectedCard}: MapProps): JSX.Element {
       layerGroup.clearLayers();
     };
 
-  }, [map, offers, selectedCard]);
+  }, [map, offers, selectedCard, currentCustomIcon, defaultCustomIcon]);
 
   useEffect(() => {
     const {location} = city;

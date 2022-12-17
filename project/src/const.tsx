@@ -74,7 +74,7 @@ const sortOffers = (offers: OfferType[], activeSorting: string) => {
   return sortingMethod(offers);
 };
 
-const MAX_NEARBY_OBJECTS = 3;
+const MAX_NEARBY_OBJECTS = 4;
 
 const MAX_OFFER_IMAGES = 6;
 
@@ -84,9 +84,14 @@ const DEFAULT_SORTING = SORTING_VALUES[0];
 
 const TIMEOUT_SHOW_ERROR = 2000;
 
-const MIN_REVIEW_LENGTH = 50;
+const enum ReviewLength {
+  Min = 50,
+  Max = 300
+}
 
-const MAX_REVIEW_LENGTH = 300;
+// const MIN_REVIEW_LENGTH = 50;
+//
+// const MAX_REVIEW_LENGTH = 300;
 
 export {
   AuthorizationStatus,
@@ -103,6 +108,5 @@ export {
   TIMEOUT_SHOW_ERROR,
   NameSpace,
   FetchStatus,
-  MIN_REVIEW_LENGTH,
-  MAX_REVIEW_LENGTH
+  ReviewLength
 };
